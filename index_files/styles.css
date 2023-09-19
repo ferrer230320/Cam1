@@ -1,0 +1,1366 @@
+@charset "UTF-8";
+
+/*********************** FUENTES GOOGLE MAPS ***********************/
+@import url('https://fonts.googleapis.com/css?family=Dosis:300,400,500,600,700,800');
+
+/*********************** GENERAL ***********************/
+body { padding: 0; margin: 0; font-family: 'Dosis',sans-serif; color: #999999; font-size: 16px; padding-top: 135px; cursor: url(../img/general/brocha.png), url(../img/general/brocha.png), pointer; }
+ul { padding: 0; margin: 0; list-style: none; }
+img { display: block; width: 100%; border: none; }
+a { text-decoration: none; color: inherit; display: block; }
+strong { color: #b1b1b1; }
+.contenedor { width: 1200px; margin: 0px auto; position: relative; }
+p { -webkit-transition: all .4s ease; -moz-transition: all .4s ease; -o-transition: all .4s ease; transition: all .4s ease; margin: 0 0 10px; }
+.bannerPrincipal { background-position: bottom center; background-size: cover; width: 100%; height: 600px; position: relative; }
+* { box-sizing: border-box; }
+*:focus { outline: none; }
+.pc { display: block; }
+.movil { display: none; }
+.tituloSeccion { background: #04579e; padding: 40px 0; position: relative; }
+.tituloSeccion h1 { text-align: center; color: #FFF; font-weight: 400; }
+.tituloSeccion::after { content: ''; display: block; background-image: url(../img/general/franjaAzul.png); height: 60px; position: absolute; bottom: -60px; width: 100%; background-size: 100% 100%; background-position: center; }
+.subtituloSeccion { background: #EEE; margin-top: 60px; }
+.subtituloSeccion h2 { color: #ec342e; text-transform: uppercase; font-size: 20px; margin-bottom: 30px; text-align: center; font-weight: 500; padding: 15px 0; }
+.subtituloSeccion::after { content: ''; display: block; background-image: url(../img/general/franjaGris.png); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; height: 80px; }
+.logoSeccion { width: 250px; margin: 0px auto; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.preloader { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #fff; z-index: 999999; }
+.status { width: 130px; height: 165px; position: absolute; left: 50%; top: 50%; background-image: url(../img/general/loader.gif); background-repeat: no-repeat; background-position: center; margin: -65px 0 0 -82px; background-size: cover; }
+.btnBackFloat { width: 70px; height: 70px; background: #0f293a; color: #fff; font-size: 40px; line-height: 63px; text-align: center; border: none; border-radius: 50%; cursor: pointer; position: fixed; bottom: 50px; left: 50px; z-index: 999; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.btnBackFloat:hover { opacity: 0.6; }
+/*********************** CONTENEDORES ***********************/
+.conteRight { width: 50%; float: right; }
+.conteLeft { width: 50%; float: left; }
+
+/*
+ANIMACIONES HTML5
+
+-webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease;
+
+-webkit-transform:scale(1.15); -moz-transform:scale(1.15); -ms-transform:scale(1.15); -o-transform:scale(1.15); transform:scale(1.15);
+
+-ms-transform: rotate(7deg); -webkit-transform: rotate(7deg); transform: rotate(7deg);
+
+-webkit-transition: all 500ms cubic-bezier(0.680, 0, 0.265, 1); -webkit-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); -moz-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); -o-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550);
+*/
+
+/*********************** CLEAR ***********************/
+.clear { clear: both; height: 0px; }
+.clear5 { clear: both; height: 5px; }
+.clear10 { clear: both; height: 10px; }
+.clear15 { clear: both; height: 15px; }
+.clear20 { clear: both; height: 20px; }
+.clear30 { clear: both; height: 30px; }
+.clear40 { clear: both; height: 40px; }
+
+/*********************** TEXTOS ***********************/
+.textCenter { text-align: center; }
+.textRight { text-align: right; }
+.textLeft { text-align: left; }
+
+/*********************** FORMULARIOS ERROR ***********************/
+label.error { display:none !important; }
+input.error { border:1px solid #F00!important; }
+select.error { border:1px solid #F00!important; }
+textarea.error { border:1px solid #F00!important; }
+
+/*********************** H1 - H6 ***********************/
+h1, h2, h3 { padding: 0; margin: 0; }
+h1 { color: #ec342e; font-size: 40px; font-weight: 500; }
+
+/*********************** COLORES FUENTE ***********************/
+.colorAzul { color: #007abf!important; }
+
+/*********************** COLUMNAS ***********************/
+.col2 li { float: left; width: 50%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+.col3 li { float: left; width: 33.33%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+.col4 li { float: left; width: 25%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+.col5 li { float: left; width: 20%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+.col6 li { float: left; width: 16.66%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+.col7 li { float: left; width: 14.28%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+.col8 li { float: left; width: 12.5%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+.col9 li { float: left; width: 11%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; }
+
+/*********************** HEADER ***********************/
+header { position: fixed; width: 100%; top: 0; left: 0; background: #FFF; z-index: 999; }
+header .top { text-align: center; background: #efefef; padding: 10px; }
+header .top strong { font-weight: 600; }
+header .top a { display: -webkit-inline-box; }
+.logo { width: 280px; float: left; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.menu { float: right; width: 800px; }
+.menu li { float: left; display: block; }
+.menu a { font-weight: 600; color: #007abf; font-size: 14px; text-align: center; text-transform: uppercase; padding: 39px 17px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.menu a:hover, .menu_activo { color: #ec342e!important; background: #ebebeb; -webkit-box-shadow: inset 0 -5px 0 0 #ec342e; -moz-box-shadow: inset 0 -5px 0 0 #ec342e; box-shadow: inset 0 -5px 0 0 #ec342e; }
+.selectMenu { width: 200px; margin: 5px auto; text-transform: uppercase; font-size: 14px; border: 1px solid; text-align-last: center; }
+.btnSearch { color: #ed352f; font-size: 30px; top: 50%; position: absolute; margin-top: -22px; right: -30px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.btnSearch i {  }
+.btnSearch:hover { opacity: .5; }
+
+/*********************** BUSCADOR ***********************/
+.bgBuscador { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 999999; display: none; }
+.cerrarBuscador { position: absolute; top: 30px; right: 30px; width: 50px; height: 50px; }
+.cerrarBuscador i { font-size: 50px; color: #FFF; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; text-align: center; display: block; cursor: pointer; }
+.formSearch { position: absolute; width: 600px; height: 90px; left: 50%; margin-left: -300px; top: 50%; }
+.inputSearch { width: 98%; padding-left: 10px; background: transparent; border: 0; border-bottom: 2px solid #D72A34; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; font-size: 40px; color: #FFF; }
+.inputSearch:focus, .submitSearch:focus { outline: none; }
+.submitSearch { background: #FFF; color: #000; border: none; font-size: 16px; text-align: center; padding: 8px 15px 8px 15px; width: 200px; float: right; cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.submitSearch:hover { opacity: .7; width: 220px; }
+
+/*********************** BUSCADOR ***********************/
+.resultados { padding-bottom: 100px; }
+
+/*********************** CALCULADORA ***********************/
+.colCalculadora .title { text-align: left; color: #333; font-size: 25px; text-transform: capitalize; font-weight: 600; border-bottom: 1px solid #333; }
+.colCalculadora .padding { padding: 0 15px; }
+.imgSuperficie { width: 50px; float: left; cursor: pointer; -webkit-transition: all 500ms cubic-bezier(0.680, 0, 0.265, 1); -webkit-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); -moz-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); -o-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); margin: 0 10px; }
+.imgSuperficieActivo { transform: scale(1.4); }
+.litrosNecesarios { color: #ec342e; font-size: 40px; text-align: left; font-weight: 600; }
+.inputCalculadora { width: 100%; padding-left: 10px; height: 34px; background-image: none; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; color: #555; margin-top: 10px; }
+.submitCalcular { background: #e21c19; color: #FFF; text-transform: uppercase; font-size: 20px; border: 1px solid #e21c19; padding: 4px 70px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; cursor: pointer; }
+.submitCalcular:hover { opacity: .5; }
+.submitCalcular:disabled { opacity: 0; visibility: hidden; }
+
+/*********************** HOME ***********************/
+.tp-banner-container { width: 100%; position: relative; padding: 0; }
+.tp-banner { width: 100%; position: relative; }
+.botonRegistro { background: #ec342e; width: 780px; margin: 0px auto; border: 5px solid #FFF; margin-top: -25px; position: relative; z-index: 99; }
+.botonRegistro a { padding: 10px 50px; color: #FFF; text-transform: uppercase; font-weight: 500; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; text-align: center; }
+.botonRegistro a:hover { background: #007abf; }
+.botonRegistro i { color: #FFF; line-height: 4px; margin: 0 20px; font-size: 30px; vertical-align: middle; }
+
+/*********************** CARRUSEL CATEGORIA HOME ***********************/
+.conteCategorias { margin-top: -25px; }
+.conteCategorias li a { background-size: cover; background-position: center; background-repeat: no-repeat; height: 240px; cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.bgCategoriaHover { position: absolute; width: 100%; height: 100%; top: 0; left: 0; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.conteTituloCategoria { background: url(../img/home/brochazoCategoria.png)no-repeat; background-size: 100% 100%; background-position: center; position: absolute; bottom: 15px; width: 100%; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.conteTituloCategoria span { text-transform: uppercase; color: #FFF; font-size: 26px; text-shadow: -2px 2px 4px #000; padding: 5px 0px 5px 60px; display: block; }
+.conteCategorias li:hover .bgCategoriaHover { background: rgba(0, 0, 0, 0.4); }
+
+/*********************** CATEGORIAS ***********************/
+.contePanMigas { background: #ec342e; position: relative; }
+.contePanMigas .rutaPan { color: #FFF; text-transform: uppercase; font-weight: 100; padding: 15px; display: block; }
+.contePanMigas .rutaPan a { display: -webkit-inline-box; font-weight: 600; }
+.contePanMigas::after { content: ''; display: block; background: url(../img/general/pan-migas.png)no-repeat; background-position: center; background-size: 100% 100%; width: 100%; height: 80px; position: absolute; bottom: -80px; left: 0; z-index: 2; }
+.contenedorCategoria { padding-top: 100px; text-align: center; }
+.contenedorCategoria h1 { text-align: center; text-transform: uppercase;     font-weight: 400; }
+.descCategoria { text-align: center; font-size: 19px; font-weight: 300; padding: 0 250px; }
+.colTipo li { float: none; display: inline-block; width: 200px; margin: 0 10px; }
+.categoriaLogo { width: 350px; margin: 0px auto; }
+.imgSubcategoria { width: 350px; display: inline-block; margin-left: 40px; }
+.bgBote { width: 200px; height: 200px; background-size: contain; background-position: center; display: table; background-repeat: no-repeat; padding: 0 28px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.bgBote-1, .bgBote-11 { background-image: url(../img/baldes/1.jpg); }
+.bgBote-2 { background-image: url(../img/baldes/2.jpg); }
+.bgBote-3 { background-image: url(../img/baldes/3.jpg); }
+.bgBote-4 { background-image: url(../img/baldes/4.jpg); }
+.bgBote-5 { background-image: url(../img/baldes/5.jpg); }
+.bgBote-6 { background-image: url(../img/baldes/6.jpg); }
+.bgBote-7 { background-image: url(../img/baldes/7.jpg); }
+.bgBote-8 { background-image: url(../img/baldes/8.jpg); }
+.bgBote-9 { background-image: url(../img/baldes/9.jpg); }
+.bgBote-10 { background-image: url(../img/baldes/10.jpg); }
+.bgBote:hover { -webkit-transform:scale(1.1); -moz-transform:scale(1.1); -ms-transform:scale(1.1); -o-transform:scale(1.1); transform:scale(1.1); }
+.bgBote span { display: table-cell; vertical-align: middle; color: #FFF; text-transform: uppercase; text-align: center; font-weight: 600; font-size: 17px; }
+.itmeProducto { width: 16.66%; margin-left: -4px; display: inline-block; vertical-align: top; }
+.itmeProductoBg { width: 100%; background-size: contain; background-position: center; background-repeat: no-repeat; height: 240px; cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.itmeProductoBg:hover { -webkit-transform:scale(1.1); -moz-transform:scale(1.1); -ms-transform:scale(1.1); -o-transform:scale(1.1); transform:scale(1.1); position: relative; z-index: 0; }
+.tituloProducto { color: #337ab7; text-align: center; text-transform: uppercase; font-weight: 100; position: relative; z-index: 2; }
+.text-cente { text-align: center; }
+.imgProducto { width: 300px; float: left; }
+.thumbProducto { width: 100%; }
+.fichaTecnica i { text-align: center; color: #ec342e; font-size: 52px; display: block; cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.fichaTecnica i:hover { opacity: .5; }
+.infoProducto { float: right; width: 850px; }
+.infoProducto h1 { font-size: 34px; font-weight: 500; letter-spacing: 2px; }
+.infoProducto h1 span { display: block; font-size: 15px; color: #007abf;     font-weight: 700; }
+.infoProducto h3 { color: #ec342e; font-size: 22px; font-style: italic; font-weight: 500; line-height: 20px; text-align: center; }
+.infoProducto label, .conteRelacionados label { color: #007abf; font-weight: 600; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+.infoProducto label { text-align: left; }
+.infoProducto label span { color: #999999; display: block; text-transform: none; font-size: 16px; font-weight: 400; line-height: 18px; }
+.itemPresentacion { width: 13.33%; float: left; text-align: center; }
+.itemPresentacion img { width: 85px; margin: 0px auto; }
+.itemPresentacionClick { cursor: pointer; margin: 0 5px; }
+.itemPresentacionClick img { -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.itemPresentacionClick img:hover { -webkit-transform:scale(1.09); -moz-transform:scale(1.09); -ms-transform:scale(1.09); -o-transform:scale(1.09); transform:scale(1.09); }
+.itemPresentacionClick .title { color: #ec342e; text-transform: uppercase; font-weight: 700; font-size: 15px; }
+.itemColor { width: 10%; float: left; }
+.bgColor { width: 60px; height: 60px; border: 1px solid #999; border-radius: 50%; box-shadow: -2px 2px 6px -2px #000; margin: 0px auto; }
+.tituloPresentacion { text-align: center; font-weight: 600; font-size: 15px; }
+.tituloPresentacion span { display: block; }
+.notaColores { font-size: 14px; text-align: left; }
+.conteRelacionados { background: #FFF; position: relative; }
+.conteRelacionados label { text-align: center; }
+.imgRelacion img { width: 100%!important; margin: 0px auto; }
+.titleRelacion { text-align: center; }
+.submenuFlotante { position: fixed; bottom: 10px; right: 10px; z-index: 9999; cursor: pointer; width: 50px; height: 50px; border: 2px solid #cd182f; border-radius: 50%; display: table; background: #FFF; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; display: none; }
+.submenuFlotante span { display: table-cell; vertical-align: middle; }
+.submenuFlotante span i { color: #005cb9; font-size: 35px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.submenuFlotante:hover { border-color: #007abf; }
+.submenuFlotante:hover span i { color: #cd182f; }
+.contesubmenuFlotante { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: 999; display: none; }
+.contesubmenuFlotanteMenu { width: 500px; margin: 0px auto; }
+.contesubmenuFlotanteMenu h1 { color: #FFF; font-size: 25px; font-weight: 500; margin-top: 10px; }
+.contesubmenuFlotanteMenu .menuCategoria { background: #EA3736; color: #FFF; text-transform: uppercase; font-size: 19px; padding: 2px 0; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.contesubmenuFlotanteMenu .menuSubCategoria { background: rgba(0, 0, 0, 0.61); color: #FFF; text-transform: uppercase; font-size: 17px; }
+.contesubmenuFlotanteMenu .menuCategoria:hover {  }
+.contesubmenuFlotanteMenu .menuSubCategoriaTipo { background: #007abf; color: #FFF; font-size: 15px; padding: 2px 0; text-transform: uppercase; }
+.conteMenuSubcategoria { height: 80px; overflow-y: scroll; overflow-x: hidden; }
+
+/*********************** REGISTRO ***********************/
+.registro .tituloSeccion { background: none; padding: 0; }
+.registro .tituloSeccion::after { display: none; }
+.registro .seccion1 { margin-top: 100px; }
+.colRegistro li { padding: 0 15px; }
+.colRegistro li .conte { border-color: #ddd; border: 1px solid #ddd; border-radius: 4px; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05); box-shadow: 0 1px 1px rgba(0,0,0,.05); }
+.colRegistro h3 { color: #333; background-color: #f5f5f5; border-color: #ddd; padding: 10px 15px; border-bottom: 1px solid transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; font-size: 23px; font-weight: 400; }
+.colRegistro label { display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: 600; }
+.colRegistro .conteInterno { padding: 15px; }
+.inputRegistro { display: block; width: 100%; height: 36px; padding: 6px 12px; font-size: 13px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075); box-shadow: inset 0 1px 1px rgba(0,0,0,.075); -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s; -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;     margin-bottom: 15px; }
+.inputRegistroNo { margin-bottom: 0px; }
+.conteInterno .radio { cursor: pointer; display: table; margin-top: 8px; }
+.conteInterno .radio input { display: inline-flex; }
+.conteInterno .radio span { position: relative; margin-left: 5px; font-weight: 500; }
+.conteInterno .radio input[type="checkbox"] { width: 20px; height: 15px; position: relative; top: 2px; }
+
+/*********************** SIMULADOR ***********************/
+.contenedorCategoriaSimulador { position: relative; }
+.contenedorCategoriaSimulador h1 { font-weight: 500; }
+.contenedorCategoriaSimulador h2 { color: #007abf; text-align: center; font-weight: 500; font-size: 22px; }
+.conteSimulador { margin: 0px auto; width: 750px; position: relative; float: left; position: relative; }
+.mascaras { position: absolute; mix-blend-mode: multiply; top: 0; left: 0; }
+.contecombinaciones { width: 430px; float: right; border-left: 3px solid #CCC; padding-left: 10px; }
+.muros { margin-bottom: 20px; }
+.muroOculto { display: none; }
+.contecombinaciones h3 { color: #007abf; font-weight: 500; font-size: 19px; background: #CCC; text-align: center; }
+.colorSimulador { float: left; width: 8.75%; }
+.itemSimulador { width: 45px; height: 45px; margin: 0px auto; border: 1px solid #000; border-radius: 50%; box-shadow: -3px 3px 8px 0px #807d7d; display: table; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; cursor: pointer; }
+.itemSimulador i { display: table-cell; vertical-align: middle; text-align: center; color: #FFF; text-shadow: 1px 1px 1px #000000a1; font-size: 23px; }
+.itemSimulador:hover { -webkit-transform:scale(1.15); -moz-transform:scale(1.15); -ms-transform:scale(1.15); -o-transform:scale(1.15); transform:scale(1.15); }
+.itemActivo { -webkit-transform:scale(1.15); -moz-transform:scale(1.15); -ms-transform:scale(1.15); -o-transform:scale(1.15); transform:scale(1.15); }
+.conteCombinaciones { margin-top: 30px; }
+.combinacionesConte { padding: 10px; }
+.tuCombinacion { display: none; }
+.combinacion1, .combinacion2, .combinacion3 { display: none; }
+.bgSimulador { position: absolute; width: 100%; max-height: 100px; height: 40px; }
+.btnReset { background: #000; color: #FFF; text-align: center; padding: 6px; font-size: 20px; letter-spacing: 10px; font-weight: 600; text-transform: uppercase; cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.btnReset:hover { opacity: .5; }
+.notaCombinacion { font-size: 13px; }
+.selectSimulador { position: absolute; top: 0; left: 0; width: 400px; z-index: 1; }
+.col3.selectSimulador { width: 300px; }
+.selectSimulador li { overflow: hidden; padding: 5px; background: #000; }
+.selectSimulador li a { cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.selectSimulador li a:hover { opacity: .5; -webkit-transform:scale(1.15); -moz-transform:scale(1.15); -ms-transform:scale(1.15); -o-transform:scale(1.15); transform:scale(1.15); }
+
+/*********************** QUIENES SOMOS ***********************/
+.imgBote { width: 200px; margin: 0px auto; }
+.quienesSomos .seccion1 p { font-size: 20px; text-align: center; font-weight: 300; padding: 0 240px; line-height: 25px; }
+.quienesSomos .seccion1 p strong { font-weight: 600; }
+.quienesSomos .seccion1 p span { color: #ec342e; }
+.quienesSomos ul.col4 { width: 45%; margin: 0px auto; }
+.quienesSomos ul.col4 li { padding: 0 16px; }
+
+.quienesSomos h2{ padding: 40px 0 20px; text-align: center;}
+
+/*********************** PUNTO DE VENTA ***********************/
+.puntoVenta .subtituloSeccion h2 { margin-bottom: 0; }
+.puntoVenta select { text-transform: capitalize; display: block; margin: 0px auto; color: #555; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 440px; height: 34px; padding: 6px 12px; cursor: pointer; margin-bottom: 20px; }
+.conteMapita { position: relative; }
+.conteMapita h1 { background: #ec342e; color: #FFF; text-align: center; font-weight: 400; text-transform: uppercase; }
+.infoMapa { color: #ec342e; font-weight: 700; text-transform: capitalize; font-size: 13px; }
+.puntoVenta .mapita { width: 100%; height: 400px; }
+.conteDistribuidor { border-bottom: 1px solid #afafaf; padding: 15px 0; }
+.conteDistribuidor:last-child { border: 0; }
+.conteDistribuidor h2 { font-size: 22px; color: #ec342e; text-transform: uppercase; font-weight: 400; }
+.tipoDistribuidor { text-transform: capitalize; }
+.correoDistribuidor a { color: #337ab7; padding: 3px 0; display: block; }
+.correoDistribuidor a i { font-size: 18px; position: relative; top: 1px; margin-right: 5px; }
+.telDistribuidor i { font-size: 18px; margin-right: 5px; }
+.conteDistribuidor strong { font-weight: 600; }
+.lineaManeja { text-transform: uppercase; }
+.textUbicacion { padding-top: 60px; }
+.textUbicacion i { font-size: 18px; margin-right: 5px; }
+.anclaActiva { background: rgba(239, 239, 239, 1); }
+
+/*********************** FAQS ***********************/
+.faqs select { text-transform: capitalize; display: block; margin: 0px auto; color: #555; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 440px; height: 34px; padding: 6px 12px; cursor: pointer; margin-bottom: 20px; }
+.conteFaqs { width: 750px; margin: 0px auto; }
+.categoriaFaq { border-top: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; padding: 10px 0; margin-top: 50px; margin-bottom: 20px; }
+.categoriaFaq span { color: #ec342e; font-weight: bold; text-transform: uppercase; text-align: center; display: block; }
+.conteFaqsItem { border-radius: 4px; border: 1px solid #ddd; margin-bottom: 5px; }
+.tituloFaq { padding: 10px 15px; background-color: #f5f5f5; cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.tituloFaq span { font-weight: bold; font-size: 14px; color: #007abf; border-color: #ddd; text-transform: uppercase; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.tituloFaq:hover, .categoriaActivaF { background: #007abf!important; }
+.tituloFaq:hover span, .categoriaActivaFSpan { color: #FFF!important; }
+.descFaq { padding: 15px; font-weight: 300; display: none; }
+
+/*********************** BLOG ***********************/
+.bgHoverBlog { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 99; cursor: pointer; display: none; }
+.bannerBlog { background-image: url(../img/blog/banner.jpg); }
+.bannerBlog .itemBanner { background-image: url(../img/general/itemBannerTinto.png); }
+.blog .bgBlanco { padding-top: 100px; padding-bottom: 30px; }
+.colBlog1 { width: 60%; float: left; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.contePost { -webkit-box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); -moz-box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); border: 1px solid #FFF; background: #FFF; position: relative; margin-bottom: 50px; }
+.contePost .conte { position: relative; width: 92%; margin: 30px auto; margin-top: 50px; }
+.conteFecha { color: #FFF; font-size: 17px; text-align: center; background: #364692; font-weight: 500; position: absolute; width: 158px; padding: 8px 0px; top: -21px; left: 30px; }
+.triangulo_bottom { width: 0; height: 0; border-bottom: 20px solid #262e55; border-left: 20px solid transparent; position: absolute; top: 0; left: -20px; }
+.tituloPost { color: #484747; font-size: 25px; font-weight: 600; }
+.imgPost { background-size: cover; background-position: center center; width: 150px; height: 150px; float: left; }
+.descPost { float: right; width: 490px; font-size: 16px; }
+.btnMore { background: #2c2c30; color: #FFF; font-size: 15px; text-align: center; width: 150px; float: right; padding: 6px 0px; position: absolute; right: 0; bottom: 0; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; cursor: pointer; font-weight: 400; }
+.btnMore:hover { width: 180px; opacity: .6; }
+.lineabotonBlog { background: #364692; width: 100%; height: 10px; }
+.botonBlog { color: #FFF; background: #364692; width: 200px; margin: 0px auto; text-align: center; margin-bottom: 50px; padding: 10px 0px; font-size: 15px; text-transform: uppercase; cursor: pointer; }
+.colBlog2 { width: 35%; float: right; position: relative; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.colBlog2 .padding { padding: 30px 15px 1px 25px; }
+.btnCerrarBlog { background: #364692; color: #FFF; position: relative; text-align: center; text-transform: uppercase; padding: 10px; margin-bottom: 15px; cursor: pointer; }
+.formBuscador { margin-bottom: 30px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; -webkit-box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.7); -moz-box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.7); box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.7); }
+.inputBuscador { float: left; border: 1px solid #FFF; height: 35px; padding-left: 10px; font-size: 15px; width: 80%; -webkit-border-top-left-radius: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-bottomleft: 10px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+.submitBuscador { float: left; background: #364692; border: 1px solid #364692; height: 35px; width: 20%; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; cursor: pointer; }
+.submitBuscador i { color: #FFF; font-size: 25px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; padding: 0; }
+.inputBuscador:focus, .submitBuscador:focus { outline: none; }
+.inputBuscador:focus + .submitBuscador i { font-size: 23px; }
+.contePopular { margin-bottom: 25px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; cursor: pointer; }
+.contePopular:hover, .contePopularActivo { -webkit-box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.7); -moz-box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.7); box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.7); }
+.contePopulares{ -webkit-box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); -moz-box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); }
+.contePopulares, .conteCategoria { background: #FFF; position: relative; }
+.conteTitulo { color: #FFF; font-size: 17px; text-align: center; background: #364692; font-weight: 500; position: absolute; width: 158px; padding: 8px 0px; top: -20px; left: 30px; }
+.conteCategoria { margin-top: 50px; -webkit-box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); -moz-box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75); }
+.imgPopular { width: 90px; height: 60px; background-size: cover; background-position: center center; float: left; }
+.infoPopular { float: right; width: 280px; }
+.tituloPopular { color: #484747; font-size: 13px; height: 42px; font-weight: 600; }
+.fechaPopular { color: #484747; font-size: 13px; font-weight: 100; }
+.tituloCategoria { text-align: left; text-transform: uppercase; font-size: 16px; color: #484747; margin-top: 10px; margin-bottom: 10px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; cursor: pointer; }
+.tituloCategoria:hover, .categoriaActiva { padding-left: 20px; font-weight: bold; }
+
+/*********************** POST ***********************/
+.bgPost { background-size: cover; background-position: center center; width: 100%; height: 450px; }
+.colVista { width: 250px; }
+.colVista li { height: 31px; }
+.fechaPost { color: #484747; font-size: 13px; text-align: center; line-height: 31px; }
+.conteVista { background: #008c99; height: 100%; }
+.conteVista .padding { padding: 0px 10px; }
+.conteVista i { color: #FFF; font-size: 30px; float: left; }
+.numVistas { float: left; color: #FFF; font-size: 14px; line-height: 31px; margin-left: 10px; }
+.conteDescripcion { padding: 0 10px; }
+.conteDescripcion p { font-size: 15px; word-wrap: break-word; }
+.conteDescripcion table { max-width: 100%; }
+.titlePost { font-size: 24px; font-weight: 500; margin-bottom: 20px; }
+.colSociales li { float: left; }
+.colSociales li .conte { padding: 5px 10px; text-transform: uppercase; cursor: pointer; border-radius: 4px; margin-left: 5px; }
+.colSociales li .conte span { position: relative; top: -3px; left: 3px; }
+.colSociales li .conte i { font-size: 22px; }
+.colSociales li:nth-child(1) .conte { background: #0a88ff; color: #FFF; margin-left: 0; }
+.colSociales li:nth-child(2) .conte { background: #306199; }
+.colSociales li:nth-child(2) .conte i { color: #FFF; }
+.colSociales li:nth-child(3) .conte { background: #26c4f1; }
+.colSociales li:nth-child(3) .conte i { color: #FFF; }
+.colSociales li:nth-child(4) .conte { background: #679714; }
+.colSociales li:nth-child(4) .conte i { color: #FFF; }
+.lineaBlog { width: 170px; height: 5px; background: #364692; }
+.conteComentarios .titulo { color: #484747; font-weight: 600; }
+.conteComentarios .titulo span {  }
+.inputComents { width: 30%; padding-left: 5px; font-size: 14px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; font-weight: 100; height: 35px; border: 2px solid #CCC; color: #000!important; width: 400px; }
+textarea.inputComents { resize: none; height: 60px; width: 100%; }
+.inputComents:focus { outline: none; }
+.btnActivo { opacity: .5; padding: 3px 40px; }
+.submitComents { float: right; background: #364692; color: #FFF; text-align: center; border: none; font-size: 16px; padding: 3px 30px; text-transform: uppercase; cursor: pointer; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.submitComents:hover, .submitComents:disabled { opacity: .5; padding: 3px 40px; outline: none; }
+.inputComents.error { border: 2px solid #F00!important; }
+.ComentarioPost { margin-top: 10px; }
+.no_margin { margin-top: 0; }
+.tituloComentario { color: #17a140; font-size: 15px; font-weight: 700; text-transform: capitalize; }
+.comentarioUsuario { color: #6d6d6d; font-size: 14px; padding-left: 15px; }
+.comentariosajax { margin-bottom: 40px; }
+.resPost { padding-left: 30px; padding-top: 5px; position: relative; }
+.separadorPost { width: 2px; height: 100%; background: #dddfe2; float: left; position: absolute; top: 5px; left: 20px; }
+
+/*********************** PAGINADOR BLOG ***********************/
+.pagination { padding-left: 0; border-radius: 4px; margin: 0px auto; display: table; }
+.pagination > li { display: inline; }
+.pagination > li > a, .pagination > li > span { position: relative; float: left; padding: 6px 12px; margin-left: -1px; line-height: 1.42857143; color: #337ab7; text-decoration: none; background-color: #fff; border: 1px solid #ddd; }
+.pagination > li:first-child > a,
+.pagination > li:first-child > span { margin-left: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+.pagination > li:last-child > a, .pagination > li:last-child > span { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus { z-index: 2; color: #23527c; background-color: #eee; border-color: #ddd; }
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus { z-index: 3; color: #fff; cursor: default; background-color: #364692; border-color: #364692; }
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus { color: #777; cursor: not-allowed; background-color: #fff; border-color: #ddd; }
+.pagination-lg > li > a, .pagination-lg > li > span { padding: 10px 16px; font-size: 18px; line-height: 1.3333333; }
+.pagination-lg > li:first-child > a, .pagination-lg > li:first-child > span { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+.pagination-lg > li:last-child > a, .pagination-lg > li:last-child > span { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+.pagination-sm > li > a, .pagination-sm > li > span { padding: 5px 10px; font-size: 12px; line-height: 1.5; }
+.pagination-sm > li:first-child > a, .pagination-sm > li:first-child > span { border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
+.pagination-sm > li:last-child > a, .pagination-sm > li:last-child > span { border-top-right-radius: 3px; border-bottom-right-radius: 3px; }
+.pager { padding-left: 0; margin: 20px 0; text-align: center; list-style: none; }
+.pager li { display: inline; }
+.pager li > a, .pager li > span { display: inline-block; padding: 5px 14px; background-color: #fff; border: 1px solid #ddd; border-radius: 15px; }
+.pager li > a:hover, .pager li > a:focus { text-decoration: none; background-color: #eee; }
+.pager .next > a, .pager .next > span { float: right; }
+.pager .previous > a, .pager .previous > span { float: left; }
+.pager .disabled > a, .pager .disabled > a:hover, .pager .disabled > a:focus, .pager .disabled > span { color: #777; cursor: not-allowed; background-color: #fff; }
+
+/******************** CAPACITACIONES ********************/
+.capacitaciones .seccion2 { padding: 50px 0px; }
+.capacitaciones .titulo { color: #0f293a;font-weight: 700;margin: 0px 0px 20px; }
+.capacitaciones .tema { width: 25%;padding-right: 30px;position: relative; }
+.capacitaciones .contenido { width: 75%;padding-left: 30px;position: relative; }
+.capacitaciones .contenido .titulo { padding: 0px 20px; }
+.capacitaciones .tema .selectTema, .capacitaciones .tema .menuTema { width: 100%;margin: 0px auto;display: block;position: relative; }
+.nombreTema { font-size: 20px; padding: 15px; color: #0f293a;font-weight: 500;text-transform: capitalize;position: relative;-webkit-transition: all .5s ease;-moz-transition: all .5s ease;-o-transition: all .5s ease;transition: all .5s ease; }
+.nombreTema::before { content: '';width: 100%;height: 2px;background: #dadcdb;display: block;position: absolute;bottom: 0;left: 0;right: 0; }
+.nombreTema:hover, .nombreTemaActivo { transform: scale(1.05)!important; background: #e22605!important; color: #FFF!important; }
+.conteCursos { width: 100%; }
+.conteCursos thead tr td { padding: 10px; font-size: 17px; text-transform: uppercase; font-weight: 600; background: #014a7a; color: #FFF; }
+.conteCursos tbody tr td { color: #0f293a; font-size: 17px; font-weight: 600; padding: 13px; }
+.conteCursos tbody tr td a { background: #e22605; border: 1px solid #e22605; color: #fff; font-weight: 700; font-size: 15px; text-transform: uppercase; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; padding: 7px 5px; text-align: center; }
+.conteCursos tbody tr td a:hover { color: #e22605;background: #fff; }
+.conteCursos tbody tr:nth-child(even) { background: #ebebeb; }
+.capacitaciones .conteVideo { width: 33.33%;height: unset;float: left;padding: 10px;-webkit-transition: all .5s ease;-moz-transition: all .5s ease;-o-transition: all .5s ease;transition: all .5s ease; }
+.capacitaciones .conteVideo .video { width: 100%; height: 200px; position: relative; background-position: center; background-size: cover; }
+.capacitaciones .conteVideo .video iframe { width: 100%;height: 100%;z-index: -1;pointer-events: none; }
+.capacitaciones .conteVideo .tituloVideo { font-size: 20px; color: #0f293a; font-weight: 700; padding: 10px 5px; }
+.capacitaciones .conteVideo .tituloVideo span { display: table-cell;vertical-align: middle; }
+.capacitaciones .conteVideo .descripcion { font-size: 18px; line-height: 22px; color: #5e5e5e; font-weight: 400; height: 110px; word-break: break-word; }
+.capacitaciones .conteVideo .btnVideo { width: 100%; background: #006eb6; border: 1px solid #006eb6; color: #fff; font-weight: 700; font-size: 16px; padding: 5px 0px; text-align: center; text-transform: uppercase; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.capacitaciones .conteVideo:hover .btnVideo, .capacitaciones .conteVideo .btnVideo:hover { color: #006eb6;background: #fff;border-radius: 5px; }
+.capacitaciones .conteVideo:hover { transform: scale(1.05); }
+.capacitaciones-videos {  }
+.capacitaciones-videos .noVideo { text-align: center; color: #ec342e; font-size: 40px; font-weight: 500; }
+.capacitaciones-videos iframe { width: 100%; height: 500px; }
+.capacitaciones-videos h2 { margin: 0!important; font-size: 30px; padding: 10px!important; }
+.capacitaciones-videos h4 { padding: 0 10px; font-weight: 500; margin: 0; font-size: 18px; }
+.capacitaciones-videos .iframeVideo { position: relative; }
+.capacitaciones-videos .iframeVideo .hoverIframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.capacitaciones-videos .descargaArchivo { background: #005CBA; color: #FFF; padding: 10px; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-top: 20px; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+.capacitaciones-videos .descargaArchivo:hover { background: #FFF; color: #005CBA; border: 1px solid #005CBA; border-radius: 20px; }
+
+/****************** FORM CAPACITACIONES *****************/
+/*.capacitaciones.formFlotante { width: 500px; padding: 20px; }*/
+/*.capacitaciones.formFlotante h1, .capacitaciones.formFlotante h3 { text-align: center;color: #0f293a;margin: 0px 0px 10px;font-weight: 700; font-size: 34px; }*/
+/*.capacitaciones .img { width: 60%; margin: 5px auto; }*/
+/*.capacitaciones.formFlotante h3 { font-size: 18px; }*/
+.capacitaciones.registro-curso .seccion2 { padding: 50px 0px 150px;position: relative; }
+.capacitaciones.registro-curso .seccion2::before { content: '';width: 400px;height: 650px;background: url(../img/capacitaciones/pintura1.png)no-repeat;background-size: 100% 100%;background-position: center;position: absolute;top: 0;left: 0; }
+.capacitaciones.registro-curso .seccion2::after { content: '';width: 263px;height: 650px;background: url(../img/capacitaciones/pintura2.png)no-repeat;background-size: 100% 100%;background-position: center;position: absolute;top: 0;right: 0; }
+.capacitaciones .noCurso { text-align: center; color: #ec342e; font-size: 40px; font-weight: 500; margin: 150px 0px 50px; position: relative; z-index: 1; }
+.capacitaciones .conteForm { width: 50%;margin-right: 200px;float: right;position: relative;z-index: 2; }
+.capacitaciones .conteForm h3 { text-align: center;font-weight: 400; }
+.capacitaciones .conteForm h1 { text-align: center;color: #0f293a;margin: 15px 0px 40px;font-weight: 700; }
+.capacitaciones .conteForm h1 span { display: block; color: #444; font-size: 0.8em; line-height: 0.9em; padding-bottom: 100px; }
+.capacitaciones form { width: 100%;position: relative; }
+.capacitaciones form .conteInput { width: 100%;display: block;margin: 0px 0px 10px; }
+.capacitaciones form .conteInput .input { width: 48%;float: left; }
+.capacitaciones form .conteInput .input:nth-child(2) { float: right; }
+.capacitaciones form ::placeholder, .capacitaciones form input:not([type="submit"]), .capacitaciones form select { font-size: 16px;line-height: 17px;color: #6b6b6b;font-weight: 500;font-family: 'Dosis',sans-serif; }
+.capacitaciones form input:not([type="submit"]), .capacitaciones form select { width: 100%;background: #fff;border: 3px solid #dadcdb;border-radius: 8px;padding: 8px 12px;-webkit-transition: all .5s ease;-moz-transition: all .5s ease;-o-transition: all .5s ease;transition: all .5s ease; }
+.capacitaciones form input[type="submit"] { display: block;width: 240px;margin: 15px auto 0px;background: #e22605;border: 1px solid #e22605;border-radius: 10px;padding: 10px 0px;color: #fff;font-size: 19px;line-height: 19px;font-weight: 700;text-transform: uppercase;text-align: center;cursor: pointer;-webkit-transition: all .5s ease;-moz-transition: all .5s ease;-o-transition: all .5s ease;transition: all .5s ease; }
+.capacitaciones form input[type="submit"]:hover, .capacitaciones form input[type="submit"]:disabled { opacity: 0.5; }
+.capacitaciones .yaRegistrado { width: 240px; background: #014a7a; margin: 40px auto; text-align: center; color: #FFF; text-transform: uppercase; padding: 7px; font-size: 15px; border-radius: 5px; }
+
+/*********************** CONTACTO ***********************/
+.mapitaContacto { width: 100%; height: 500px; }
+.conteRojo { color: #FFF; text-align: center; background: #ec342e; padding: 20px 430px; position: relative; z-index: 1; }
+.conteRojo h1 { color: #FFF; text-align: center; font-size: 24px; font-weight: 500; }
+.conteRojo p { font-weight: 300; }
+.conteRojo p strong { color: #FFF; }
+.contenedorContacto { background: #04579e; min-height: 100px; height: auto; position: relative; padding-top: 50px; padding-bottom: 40px; }
+.contenedorContacto::before { content: ''; display: block; background: url(../img/contacto/brochazo.png)no-repeat; background-size: 100% 100%; background-position: center; position: absolute; top: -110px; left: 0; width: 100%; height: 110px; z-index: 0; }
+.contenedorContacto .padding { padding: 15px; }
+.logoBlancoFooter { width: 200px; }
+.contenedorContacto h1 { color: #FFF; text-transform: uppercase; font-size: 24px; font-weight: 300; }
+.contenedorContacto p { color: #FFF; font-weight: 200; }
+.submitContacto { background: #e5e5e5; color: #005cb9; text-transform: uppercase; font-size: 19px; margin: 0px auto; padding: 3px; display: block; font-family: 'Dosis',sans-serif; width: 380px; letter-spacing: 3px; font-weight: 700; border: 1px solid; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; cursor: pointer; }
+.submitContacto:hover, .submitContacto:disabled { opacity: .5; }
+
+/*********************** AVISO DE PRIVACIDAD ***********************/
+.aviso .tituloSeccion::after { display: none; }
+.aviso .contenedor { margin-top: 30px; }
+.aviso h2 { color: #ec342e; text-transform: uppercase; font-size: 20px; font-weight: 600; margin-bottom: 30px; }
+.aviso h3 { font-weight: 500; font-size: 23px; }
+.aviso p { margin: 15px auto; }
+
+/*********************** FOOTER ***********************/
+footer { position: relative; z-index: 1; background: #FFF; }
+footer strong { color: #ec342e; }
+footer .seccion1 .brocha { width: 130px; margin: 0px auto; }
+footer .seccion1 h1 { text-align: center; }
+.carruselBlog { position: relative; }
+.carruselBlog .bgThumb { display: table; text-align: center; font-size: 17px; font-weight: 600; text-transform: uppercase; margin: 0px auto; width: 100%; background-repeat: no-repeat; background-size: cover; background-position: center; height: 220px; position: relative; }
+.bgThumbHover { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: rgba(0, 0, 0, 0.4); display: none; }
+.bgThumbHover i { color: #FFF; font-size: 40px; position: absolute; top: 50%; left: 50%; margin-left: -17.5px; margin-top: -20px; }
+.bgThumb:hover .bgThumbHover { display: block; -webkit-animation: zoomIn 0.2s; -moz-animation: zoomIn 0.2s; -ms-animation: zoomIn 0.2s; -o-animation: zoomIn 0.2s; animation: zoomIn 0.2s; }
+@-webkit-keyframes zoomIn {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale3d(.3, .3, .3);
+		transform: scale3d(.3, .3, .3);
+	}
+	50% {
+		opacity: 1;
+	}
+}
+@keyframes zoomIn {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale3d(.3, .3, .3);
+		transform: scale3d(.3, .3, .3);
+	}
+	50% {
+		opacity: 1;
+	}
+}
+.zoomIn { -webkit-animation-name: zoomIn; animation-name: zoomIn; }
+.carruselBlog .categoriaThumb { text-align: center; color: #007abf; font-weight: 400; font-size: 16px; }
+.carruselBlog .tituloThumb { text-align: center; font-size: 17px; font-weight: 600; text-transform: uppercase; }
+.carruselPanoramaArrow, .carruselPanoramaRightArrow { position: absolute; top: 50%; margin-top: -50px; font-size: 40px; color: #e31c1a; }
+.carruselPanoramaArrow { left: -40px; }
+.carruselPanoramaRightArrow { left: inherit; right: -40px; }
+
+footer .seccion2 { /*background: url(../img/footer/bg.jpg); background-size: 100% 100%; background-repeat: no-repeat;*/ background-image: url(../img/footer/franja-roja.png); background-size: 100% 100%; background-repeat: no-repeat; padding: 60px 0 130px 0; color: #007abf; margin-top: 40px; }
+footer .seccion2_1 { background-image: url(../img/footer/franja-gris.png); margin-top: -80px; position: relative; z-index: 0; padding: 45px 0 100px 0; }
+footer .seccion2_1 ul { width: 700px; margin: 0px auto; text-align: center; }
+footer .seccion2_1 ul li{ padding: 15px; float: none; display: inline-block; }
+footer .seccion2_2 { background-image: none; padding: 0px 0 70px 0; }
+footer .seccion2 p { color: #FFF; text-align: center; }
+.logoBlanco { width: 300px; margin: 0px auto; }
+.logoAniversario { width: 250px; margin: 0px auto; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; position: relative; display: block; margin-top: -80px; }
+footer .seccion2 h1 { font-size: 30px; margin-bottom: 20px; text-align: center; }
+.carruselClientes { position: relative; }
+.carruselClientes .carruselPanoramaArrow { margin-top: -30px; }
+footer .seccion3 { background: #04579e; padding-bottom: 50px; position: relative; }
+footer .seccion3:before {  content: ''; display: block; background-image: url(../img/footer/franja-azul-corta.png); background-repeat: no-repeat; background-size: 100% 100%; background-position: top; width: 100%; height: 40px; position: absolute; top: -40px; }
+footer .seccion3 h1 { color: #05bafd; text-align: center; text-transform: uppercase; }
+footer .seccion3 p { color: #FFF; text-align: center; }
+footer .seccion3 ul .padding { padding: 0 15px; }
+.inputFooter { background: transparent; width: 100%; height: 34px; padding: 6px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075); box-shadow: inset 0 1px 1px rgba(0,0,0,.075); margin-bottom: 15px; color: #FFF; font-weight: 100; font-family: 'Dosis',sans-serif; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+textarea.inputFooter { resize: none; height: 83px; margin-bottom: 11px; }
+.inputFooter::-webkit-input-placeholder { text-transform: uppercase; color: #FFF; font-weight: 100; }
+.inputFooter::-moz-placeholder { text-transform: uppercase; color: #FFF; font-weight: 100; }
+.inputFooter:-ms-input-placeholder { text-transform: uppercase; color: #FFF; font-weight: 100; }
+.inputFooter:-moz-placeholder { text-transform: uppercase; color: #FFF; font-weight: 100; }
+.submitContactoFooter { background: #e5e5e5; color: #005cb9; text-transform: uppercase; font-size: 19px; margin: 0px auto; padding: 3px; display: block; float: left; font-family: 'Dosis',sans-serif; width: 200px; letter-spacing: 3px; font-weight: 700; border: 1px solid; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; cursor: pointer; }
+.submitContactoFooter:hover, .submitContactoFooter:disabled { opacity: .5; }
+footer .seccion4 { padding: 40px 0; }
+footer .seccion4 li:nth-child(2) a { background: #ec342e; color: white; padding: 2px 15px; border-radius: 10px; text-transform: uppercase; width: 170px; margin: 0px auto; font-weight: 300; text-align: center; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+footer .seccion4 li:nth-child(2) a:hover { background: #04579e; }
+footer .seccion4 li:nth-child(3) { text-align: center; }
+footer .seccion4 li:nth-child(3) a { display: inline; }
+footer .seccion4 li i { font-size: 33px!important; -webkit-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
+footer .seccion4 li i:hover { opacity: .5; }
+footer .seccion4 .fa-youtube { color: #e52d27 }
+footer .seccion4 .fa-facebook-square { color: #3b5998; }
+.reservado { text-align: center; }
+.conteVideo { margin: 0px auto; display: block; width: 700px; height: 410px; }
+.seccionVideo { margin: 30px auto; }
+.powerby { text-align: center; }
+.powerby a { display: initial; }
+
+footer .seccion3 #formContacto p { text-align: left; }
+footer .seccion3 #formContacto h1 { color: #FFF; text-transform: uppercase; font-size: 24px; font-weight: 300; text-align: left; }
+
+/*********************** MEDIAS QUERIES ***********************/
+@media screen and (min-width: 320px) and (max-width: 479px) {
+	/*********************** GENERAL ***********************/
+	.contenedor { width: 90%; }
+	.pc { display: none; }
+	.movil { display: block; }
+	body { font-size: 15px; padding-top: 135px; }
+	.tituloSeccion { padding: 15px 0; }
+	.tituloSeccion::after { height: 30px; bottom: -30px; }
+	.subtituloSeccion { margin-top: 30px; }
+	.subtituloSeccion h2 { font-size: 18px; margin-bottom: 0px;  }
+	.subtituloSeccion::after { height: 30px; }
+	.logoSeccion { width: 200px; }
+	.btnBackFloat { width: 50px; height: 50px; font-size: 30px; line-height: 45px; bottom: 10px; left: 10px; }
+
+	/*********************** FORMULARIO DE REGISTRO ***********************/
+	.registro .seccion1 { margin-top: 40px; }
+	.colRegistro li { width: 100%; }
+	.colRegistro h3 { font-size: 21px; padding: 10px; }
+
+	/*********************** PUNTO DE VENTA ***********************/
+	.puntoVenta .mapita { height: 250px; }
+
+	/*********************** HEADER ***********************/
+	header .top { padding: 5px; font-size: 15px; }
+	.logo { width: 180px; margin: 0px auto; float: none; }
+	.menu { width: 100%; }
+	.menu li { display: none; }
+	.btnSearch { display: block; z-index: 999; top: 30px; right: 20px; font-size: 25px; }
+	.cerrarBuscador i { font-size: 35px; }
+	.cerrarBuscador { top: 10px; right: 0; width: 40px; height: 35px; }
+	.formSearch { width: 300px; margin-left: -150px; margin-top: -45px; }
+	.submitSearch { font-size: 14px; margin: 0px auto; display: block; float: none; padding: 9px 20px; width: 150px; }
+	.inputSearch { font-size: 26px; }
+
+	/*********************** CALCULADORA ***********************/
+	.colCalculadora li { width: 100%; }
+	.colCalculadora .title { font-size: 20px; }
+	.imgSuperficie { width: 40px; }
+	.litrosNecesarios { font-size: 30px; }
+
+	/*********************** H1 - H6 ***********************/
+	h1, footer .seccion2 h1 { font-size: 25px; }
+
+	/*********************** HOME ***********************/
+	.botonRegistro { width: 100%; margin: 10px auto; }
+	.botonRegistro a { padding: 5px; }
+	.botonRegistro i { display: none; }
+	.conteCategorias { margin: 0px auto; }
+	.conteCategorias li { width: 50%; }
+	.conteCategorias li:nth-child(1) { width: 100%; }
+	.conteCategorias li:nth-child(1) a { height: 150px; }
+	.conteCategorias li a { height: 130px; }
+	.conteTituloCategoria span { font-size: 20px; text-align: center; font-size: 18px; padding: 5px; }
+
+	/*********************** QUIENES SOMOS ***********************/
+	.imgBote { width: 130px; }
+	.quienesSomos .seccion1 p { font-size: 16px; padding: 0; line-height: 22px; }
+	.quienesSomos ul.col4 { width: 100%; }
+	.quienesSomos ul.col4 li { padding: 0 5px; }
+
+	/*********************** PUNTO DE VENTA ***********************/
+	.puntoVenta select { width: 80%; }
+	.conteDistribuidor h2 { font-size: 19px; }
+	.conteDistribuidor li { width: 100%; text-align: center; }
+	.textUbicacion { padding-top: 10px; }
+
+	/*********************** FAQS ***********************/
+	.faqs select { width: 80%; }
+	.conteFaqs { width: 100%; }
+	.categoriaFaq { margin: 20px auto; }
+	.tituloFaq { padding: 5px 10px; }
+
+	/*********************** CONTACTO ***********************/
+	.mapitaContacto { height: 300px; }
+	.conteRojo { padding: 0; margin: 15px auto; }
+	.conteRojo h1 { font-size: 23px; }
+	.contenedorContacto { padding: 10px; }
+	.contenedorContacto::before { display: none; }
+	.contenedorContacto li { width: 100%; }
+	.contenedorContacto .padding { padding: 5px; }
+	.logoBlancoFooter { width: 150px; margin: 0px auto; }
+	.contenedorContacto h1 { text-align: center; }
+	.contenedorContacto p { text-align: center; }
+	.submitContacto { width: 100%; }
+
+	/*********************** CATEGORIAS ***********************/
+	.contePanMigas::after { height: 30px; bottom: -30px; }
+	.contenedorCategoria { padding-top: 30px; }
+	.descCategoria { font-size: 16px; padding: 0; }
+	.imgSubcategoria, .categoriaLogo { width: 300px; margin: 0px auto; }
+	.colTipo { width: 320px; margin: 0px auto; }
+	.colTipo li { width: 135px; }
+    .bgBote { width: 135px; height: 135px; margin: 0px auto; padding: 0 10px; }
+    .bgBote span { font-size: 13px; }
+    .itmeProducto { width: 33.33%; }
+    .itmeProductoBg { height: 160px; }
+    .imgProducto { width: 300px; float: none; margin: 0px auto; }
+	.thumbProducto { width: 200px; margin: 0px auto; }
+    .infoProducto { width: 100%; }
+    .infoProducto h1 { font-size: 30px; }
+    .infoProducto h3 { font-size: 19px; }
+    .infoProducto label, .conteRelacionados label { font-size: 17px; }
+    .itemPresentacion { width: 20%; }
+    .itemPresentacion img { width: 85%; }
+    .conteRelacionados label { display: -webkit-inline-box; }
+    .itemColor { width: 20%; }
+    .bgColor { width: 50px; height: 50px; }
+    .tituloPresentacion { font-size: 14px; }
+
+    /*********************** SIMULADOR ***********************/
+    .contenedorCategoriaSimulador h2 { font-size: 19px; }
+    .conteSimulador { width: 100%; }
+    .btnReset { padding: 3px; font-size: 19px; }
+    .contecombinaciones { width: 100%; padding: 0; border: none; }
+    .contecombinaciones h3 { padding: 5px; }
+    .selectSimulador { width: 100%; }
+
+	/*********************** BLOG ***********************/
+	.blog .bgBlanco { padding-top: 0; }
+	.colBlog1 { width: 320px; margin: 0px auto; float: none; }
+	.conteFecha { font-size: 15px; width: 140px; padding: 6px 0; margin-left: -70px; left: 50%; }
+	.triangulo_bottom { display: none; }
+	.contePost .conte { margin: 10px auto; margin-top: 20px; }
+	.contePost .conte .clear20 { height: 10px; }
+	.tituloPost { font-size: 16px; text-align: center; }
+	.imgPost { width: 100px; height: 80px; }
+    .descPost { width: 180px; }
+    .descPost, .descPost p { font-size: 13px; font-weight: 300; text-align: left; }
+    .btnMore { position: relative; float: none; margin: 0px auto; font-size: 14px; width: 130px; }
+    .pull-right { margin: 0px auto!important; float: none!important; }
+    .btnBlog { display: inline-block; }
+    .colBlog2 { position: fixed; width: 300px; top: 0; right: -300px; background: #FFF; z-index: 9999; height: 100%; border-bottom: 1px solid #af8a5f; }
+    .contePopulares, .conteCategoria { box-shadow: none; height: 28%; }
+	.contePopular { margin-bottom: 10px; }
+	.conteTitulo { font-size: 14px; position: relative; top: 0; left: 0; width: 100%; }
+	.conteTitulo { margin-bottom: 2px; }
+	.colBlog2 .padding { padding: 5px; height: 83%; overflow-x: hidden; overflow-y: scroll; }
+	.imgPopular { width: 25%; height: 55px; }
+	.tituloPopular { font-size: 12px; height: 40px; }
+	.infoPopular { width: 70%; }
+	.fechaPopular { font-size: 12px; }
+	.conteCategoria { margin-top: 0px; }
+	.conteCategoria .padding { height: 80%; overflow-x: hidden; overflow-y: scroll; }
+	.tituloCategoria { font-size: 14px; margin: 8px auto; }
+	.inputBuscador { font-size: 12px; }
+	.bgPost { height: 210px; }
+	.colVista { margin: 0px auto; }
+	.titlePost { font-size: 18px; }
+	.conteDescripcion p { font-size: 15px; font-weight: 500; }
+	.colSociales li .conte i { font-size: 19px; }
+	.submitComents { font-size: 15px; }
+	.formBuscador { width: 90%; margin: 0px auto; }
+	.inputComents, textarea.inputComents { width: 96%; }
+
+	/******************** CAPACITACIONES ********************/
+	.capacitaciones .seccion2 { padding: 10px 0; }
+	.capacitaciones .tema { width: 100%; float: none; padding: 0; margin-bottom: 30px; }
+	.capacitaciones .titulo { font-size: 20px; margin: 0px 0px 10px; }
+	.dropTema { display: none; }
+	.capacitaciones .contenido { padding: 0; }
+	.capacitaciones .tema .selectTema, .capacitaciones .tema .menuTema { overflow: hidden; }
+	.nombreTema { font-size: 15px; padding: 9px; display: table; float: left; margin: 0 6px; }
+	.capacitaciones .contenido { width: 100%; float: none; }
+	.conteCursos thead tr td { padding: 7px; font-size: 14px; }
+	.conteCursos thead tr td { width: 33.33%; }
+	.conteCursos tbody tr td { font-size: 14px; padding: 5px; }
+	.conteCursos tbody tr td a { font-size: 12px; padding: 5px 4px; }
+	.capacitaciones .conteVideo { width: 90%; padding: 5px; margin: 0px auto; float: none; }
+	.capacitaciones .conteVideo .tituloVideo { font-size: 18px; padding: 8px 3px; }
+	.capacitaciones .conteVideo .descripcion { font-size: 16px; line-height: initial; height: auto; }
+	.capacitaciones .conteVideo .btnVideo { font-size: 14px; }
+	.capacitaciones-videos iframe { height: 280px; }
+	/*.capacitaciones.formFlotante { width: 320px; padding: 5px; }*/
+	/*.capacitaciones.formFlotante h1, .capacitaciones.formFlotante h3 { font-size: 24px; }*/
+	/*.capacitaciones.formFlotante h3 { font-size: 16px; }*/
+	.capacitaciones.registro-curso .seccion2 { padding: 20px 0px; }
+	.capacitaciones.registro-curso .seccion2::before { width: 339px;height: 550px; }
+	.capacitaciones.registro-curso .seccion2::after { width: 223px;height: 550px; }
+	.capacitaciones .noCurso { font-size: 30px; margin: 150px 0px; color: #fff; text-shadow: 0px 0px 8px rgb(0 0 0); font-weight: 700; }
+	.capacitaciones .conteForm { width: 100%;margin-right: 0; }
+	.capacitaciones .conteForm h3 { color: #fff; text-shadow: 0px 0px 8px rgb(0 0 0); font-weight: 700; }
+	.capacitaciones .conteForm h1 { margin: 10px 0px 20px; text-shadow: 2px 2px 2px rgb(255 255 255 / 50%); }
+	.capacitaciones form .conteInput .input { width: 100%; }
+	.capacitaciones form .conteInput { margin-bottom: 0; }
+	.capacitaciones form input:not([type="submit"]), .capacitaciones form select { padding: 6px 7px; font-size: 14px; }
+	.capacitaciones form input:not([type="submit"]) { margin-bottom: 10px; }
+	.capacitaciones form input[type="submit"] { width: 100%; margin: 0px auto; padding: 5px; font-size: 15px; line-height: inherit; }
+	.capacitaciones .yaRegistrado { margin: 20px auto; width: 100%; }
+
+	/*********************** FOOTER ***********************/
+	footer .seccion1 .brocha { width: 80px; }
+	.seccionVideo { margin: 15px auto; }
+	.carruselBlog .bgThumb {  }
+	.conteVideo { width: 100%; height: 240px; }
+	.carruselPanoramaArrow { left: 0; }
+	.carruselPanoramaRightArrow { left: inherit; right: 0; }
+	.carruselPanoramaArrow, .carruselPanoramaRightArrow { margin-top: -55px; }
+	.logoBlanco { width: 170px; }
+	.logoAniversario { width: 150px; margin-top: 0; }
+	footer .seccion2 { background: #CB1C34; padding: 10px 0; margin-top: 0; }
+	footer .seccion2_1 { background: #E9EBED; margin-top: 0; padding: 10px 0; }
+	footer .seccion2_2 { background-image: none; background: #FFF; margin-top: 0; }
+	footer .seccion3:before { display: none; }
+	footer .seccion3 ul .padding { padding: 0 5px; }
+	footer .seccion3 ul li { width: 100%; }
+	.submitContactoFooter { font-size: 18px; margin: 0px auto; float: none; }
+	footer .seccion3 { padding-bottom: 20px; }
+	footer .seccion4 { padding: 15px 0; }
+	footer .seccion4 ul {  }
+	footer .seccion4 li { width: 100%; margin: 10px; text-align: center; }
+	footer .seccion2_1 ul { width: 90%; }
+	footer .seccion2_1 ul li {  }
+}
+
+@media screen and (min-width: 480px) and (max-width: 599px) {
+	/*********************** GENERAL ***********************/
+	.contenedor { width: 95%; }
+	.pc { display: none; }
+	.movil { display: block; }
+	body { font-size: 16px; padding-top: 135px; }
+	.tituloSeccion { padding: 15px 0; }
+	.tituloSeccion::after { height: 30px; bottom: -30px; }
+	.subtituloSeccion { margin-top: 30px; }
+	.subtituloSeccion h2 { font-size: 18px; margin-bottom: 0px;  }
+	.subtituloSeccion::after { height: 30px; }
+	.logoSeccion { width: 200px; }
+	.btnBackFloat { width: 55px; height: 55px; font-size: 30px; line-height: 51px; bottom: 10px; left: 10px; }
+
+	/*********************** FORMULARIO DE REGISTRO ***********************/
+	.registro .seccion1 { margin-top: 40px; }
+	.colRegistro li { width: 100%; }
+	.colRegistro h3 { font-size: 21px; padding: 10px; }
+
+	/*********************** PUNTO DE VENTA ***********************/
+	.puntoVenta .mapita { height: 250px; }
+
+	/*********************** HEADER ***********************/
+	header .top { padding: 5px; font-size: 15px; }
+	.logo { width: 180px; margin: 0px auto; float: none; }
+	.menu { width: 100%; }
+	.menu li { display: none; }
+	.btnSearch { display: block; z-index: 999; top: 30px; right: 20px; font-size: 25px; }
+	.cerrarBuscador i { font-size: 35px; }
+	.cerrarBuscador { top: 10px; right: 0; width: 40px; height: 35px; }
+	.formSearch { width: 300px; margin-left: -150px; margin-top: -45px; }
+	.submitSearch { font-size: 14px; margin: 0px auto; display: block; float: none; padding: 9px 20px; width: 150px; }
+	.inputSearch { font-size: 26px; }
+
+	/*********************** CALCULADORA ***********************/
+	.colCalculadora li { width: 100%; }
+	.colCalculadora .title { font-size: 20px; }
+	.imgSuperficie { width: 40px; }
+	.litrosNecesarios { font-size: 30px; }
+
+	/*********************** H1 - H6 ***********************/
+	h1, footer .seccion2 h1 { font-size: 25px; }
+
+	/*********************** HOME ***********************/
+	.botonRegistro { width: 100%; margin: 10px auto; }
+	.botonRegistro a { padding: 5px; }
+	.botonRegistro i { display: none; }
+	.conteCategorias { margin: 0px auto; }
+	.conteCategorias li { width: 50%; }
+	.conteCategorias li:nth-child(1) { width: 100%; }
+	.conteCategorias li:nth-child(1) a { height: 150px; }
+	.conteCategorias li a { height: 150px; }
+	.conteTituloCategoria span { font-size: 20px; text-align: center; font-size: 18px; padding: 5px; }
+
+	/*********************** QUIENES SOMOS ***********************/
+	.imgBote { width: 160px; }
+	.quienesSomos .seccion1 p { font-size: 16px; padding: 0; line-height: 22px; }
+	.quienesSomos ul.col4 { width: 100%; }
+	.quienesSomos ul.col4 li { padding: 0 5px; }
+
+	/*********************** PUNTO DE VENTA ***********************/
+	.puntoVenta select { width: 80%; }
+	.conteDistribuidor h2 { font-size: 19px; }
+	.conteDistribuidor li { width: 100%; text-align: center; }
+	.textUbicacion { padding-top: 10px; }
+
+	/*********************** FAQS ***********************/
+	.faqs select { width: 80%; }
+	.conteFaqs { width: 100%; }
+	.categoriaFaq { margin: 20px auto; }
+	.tituloFaq { padding: 5px 10px; }
+
+	/*********************** CONTACTO ***********************/
+	.mapitaContacto { height: 300px; }
+	.conteRojo { padding: 0; margin: 15px auto; }
+	.conteRojo h1 { font-size: 23px; }
+	.contenedorContacto { padding: 10px; }
+	.contenedorContacto::before { display: none; }
+	.contenedorContacto li { width: 100%; }
+	.contenedorContacto .padding { padding: 5px; }
+	.logoBlancoFooter { width: 150px; margin: 0px auto; }
+	.contenedorContacto h1 { text-align: center; }
+	.contenedorContacto p { text-align: center; }
+	.submitContacto { width: 100%; }
+
+	/*********************** CATEGORIAS ***********************/
+	.contePanMigas::after { height: 30px; bottom: -30px; }
+	.contenedorCategoria { padding-top: 30px; }
+	.descCategoria { font-size: 16px; padding: 0; }
+	.imgSubcategoria, .categoriaLogo { width: 300px; margin: 0px auto; }
+	.colTipo { width: 450px; margin: 0px auto; }
+	.colTipo li { width: 190px; }
+    .bgBote { width: 165px; height: 165px; margin: 0px auto; padding: 0 10px; }
+    .bgBote span { font-size: 15px; }
+    .itmeProducto { width: 33.33%; }
+    .itmeProductoBg { height: 180px; }
+    .imgProducto { width: 300px; float: none; margin: 0px auto; }
+	.thumbProducto { width: 200px; margin: 0px auto; }
+    .infoProducto { width: 100%; }
+    .infoProducto h1 { font-size: 30px; }
+    .infoProducto h3 { font-size: 19px; }
+    .infoProducto label, .conteRelacionados label { font-size: 17px; }
+    .itemPresentacion { width: 20%; }
+    .itemPresentacion img { width: 85px; }
+    .conteRelacionados label { display: -webkit-inline-box; }
+    .itemColor { width: 20%; }
+    .bgColor { width: 50px; height: 50px; }
+    .tituloPresentacion { font-size: 14px; }
+    .tituloProducto { font-size: 17px; }
+
+    /*********************** SIMULADOR ***********************/
+    .contenedorCategoriaSimulador h2 { font-size: 19px; }
+    .conteSimulador { width: 100%; }
+    .btnReset { padding: 3px; font-size: 19px; }
+    .contecombinaciones { width: 100%; padding: 0; border: none; }
+    .contecombinaciones h3 { padding: 5px; }
+
+	/*********************** BLOG ***********************/
+	.blog .bgBlanco { padding-top: 0; }
+	.colBlog1 { width: 320px; margin: 0px auto; float: none; }
+	.conteFecha { font-size: 15px; width: 140px; padding: 6px 0; margin-left: -70px; left: 50%; }
+	.triangulo_bottom { display: none; }
+	.contePost .conte { margin: 10px auto; margin-top: 20px; }
+	.contePost .conte .clear20 { height: 10px; }
+	.tituloPost { font-size: 16px; text-align: center; }
+	.imgPost { width: 100px; height: 80px; }
+    .descPost { width: 180px; }
+    .descPost, .descPost p { font-size: 13px; font-weight: 300; text-align: left; }
+    .btnMore { position: relative; float: none; margin: 0px auto; font-size: 14px; width: 130px; }
+    .pull-right { margin: 0px auto!important; float: none!important; }
+    .btnBlog { display: inline-block; }
+    .colBlog2 { position: fixed; width: 300px; top: 0; right: -300px; background: #FFF; z-index: 9999; height: 100%; border-bottom: 1px solid #af8a5f; }
+    .contePopulares, .conteCategoria { box-shadow: none; height: 28%; }
+	.contePopular { margin-bottom: 10px; }
+	.conteTitulo { font-size: 14px; position: relative; top: 0; left: 0; width: 100%; }
+	.conteTitulo { margin-bottom: 2px; }
+	.colBlog2 .padding { padding: 5px; height: 83%; overflow-x: hidden; overflow-y: scroll; }
+	.imgPopular { width: 25%; height: 55px; }
+	.tituloPopular { font-size: 12px; height: 40px; }
+	.infoPopular { width: 70%; }
+	.fechaPopular { font-size: 12px; }
+	.conteCategoria { margin-top: 0px; }
+	.conteCategoria .padding { height: 80%; overflow-x: hidden; overflow-y: scroll; }
+	.tituloCategoria { font-size: 14px; margin: 8px auto; }
+	.inputBuscador { font-size: 12px; }
+	.bgPost { height: 210px; }
+	.colVista { margin: 0px auto; }
+	.titlePost { font-size: 18px; }
+	.conteDescripcion p { font-size: 15px; font-weight: 500; }
+	.colSociales li .conte i { font-size: 19px; }
+	.submitComents { font-size: 15px; }
+	.formBuscador { width: 90%; margin: 0px auto; }
+	.inputComents, textarea.inputComents { width: 96%; }
+
+	/******************** CAPACITACIONES ********************/
+	.capacitaciones .seccion2 { padding: 10px 0; }
+	.capacitaciones .tema { width: 100%; float: none; padding: 0; margin-bottom: 30px; }
+	.capacitaciones .titulo { font-size: 20px; margin: 0px 0px 10px; }
+	.dropTema { display: none; }
+	.capacitaciones .contenido { padding: 0; }
+	.capacitaciones .tema .selectTema, .capacitaciones .tema .menuTema { overflow: hidden; }
+	.nombreTema { font-size: 17px; padding: 9px; display: table; float: left; margin: 0 6px; }
+	.capacitaciones .contenido { width: 100%; float: none; }
+	.conteCursos thead tr td { padding: 7px; font-size: 14px; }
+	.conteCursos thead tr td { width: 33.33%; }
+	.conteCursos tbody tr td { font-size: 14px; padding: 5px; }
+	.conteCursos tbody tr td a { font-size: 12px; padding: 5px 4px; }
+	.capacitaciones .conteVideo { width: 90%; padding: 5px; margin: 0px auto; float: none; }
+	.capacitaciones .conteVideo .tituloVideo { font-size: 18px; padding: 8px 3px; }
+	.capacitaciones .conteVideo .descripcion { font-size: 16px; line-height: initial; height: auto; }
+	.capacitaciones .conteVideo .btnVideo { font-size: 14px; }
+	.capacitaciones-videos iframe { height: 280px; }
+	/*.capacitaciones.formFlotante { width: 450px; padding: 5px; }*/
+	/*.capacitaciones.formFlotante h1, .capacitaciones.formFlotante h3 { font-size: 24px; }*/
+	/*.capacitaciones.formFlotante h3 { font-size: 16px; }*/
+	.capacitaciones.registro-curso .seccion2 { padding: 20px 0px; }
+	.capacitaciones.registro-curso .seccion2::before { width: 339px;height: 550px; }
+	.capacitaciones.registro-curso .seccion2::after { width: 223px;height: 550px; }
+	.capacitaciones .noCurso { font-size: 30px; margin: 150px 0px; color: #fff; text-shadow: 0px 0px 8px rgb(0 0 0); font-weight: 700; }
+	.capacitaciones .conteForm { width: 450px;float: none;margin: 0px auto; }
+	.capacitaciones .conteForm h3 { color: #fff; text-shadow: 0px 0px 8px rgb(0 0 0); font-weight: 700; }
+	.capacitaciones .conteForm h1 { margin: 10px 0px 20px; text-shadow: 1px 1px 4px rgb(255 255 255 / 60%); }
+	.capacitaciones form .conteInput .input { width: 100%; }
+	.capacitaciones form .conteInput { margin-bottom: 0; }
+	.capacitaciones form input:not([type="submit"]), .capacitaciones form select { padding: 6px 7px; font-size: 14px; }
+	.capacitaciones form input:not([type="submit"]) { margin-bottom: 10px; }
+	.capacitaciones form input[type="submit"] { width: 100%; margin: 0px auto; padding: 5px; font-size: 15px; line-height: inherit; }
+	.capacitaciones .yaRegistrado { width: 100%;margin: 20px auto; }
+
+	/*********************** FOOTER ***********************/
+	footer .seccion1 .brocha { width: 80px; }
+	.seccionVideo { margin: 15px auto; }
+	.carruselBlog .bgThumb {  }
+	.carruselBlog { width: 450px!important; margin: 0px auto; }
+	.conteVideo { width: 450px; height: 300px; }
+	.carruselPanoramaArrow { left: 0; }
+	.carruselPanoramaRightArrow { left: inherit; right: 0; }
+	.carruselPanoramaArrow, .carruselPanoramaRightArrow { margin-top: -55px; }
+	.logoBlanco { width: 170px; }
+	.logoAniversario { width: 150px; margin-top: 0; }
+	footer .seccion2 { background: #CB1C34; padding: 10px 0; margin-top: 0; }
+	footer .seccion2_1 { background: #E9EBED; margin-top: 0; padding: 10px 0; }
+	footer .seccion2_2 { background-image: none; background: #FFF; margin-top: 0; }
+	footer .seccion3:before { display: none; }
+	footer .seccion3 ul .padding { padding: 0 5px; }
+	footer .seccion3 ul li { width: 100%; }
+	.submitContactoFooter { font-size: 18px; margin: 0px auto; float: none; }
+	footer .seccion3 { padding-bottom: 20px; }
+	footer .seccion4 { padding: 15px 0; }
+	footer .seccion4 ul {  }
+	footer .seccion4 li { width: 100%; margin: 10px; text-align: center; }
+	footer .seccion2_1 ul { width: 90%; }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1023px) {
+	/*********************** GENERAL ***********************/
+	.contenedor { width: 95%; }
+	.pc { display: none; }
+	.movil { display: block; }
+	body { font-size: 16px; padding-top: 135px; }
+	.tituloSeccion { padding: 15px 0; }
+	.tituloSeccion::after { height: 30px; bottom: -30px; }
+	.subtituloSeccion { margin-top: 30px; }
+	.subtituloSeccion h2 { font-size: 18px; margin-bottom: 0px;  }
+	.subtituloSeccion::after { height: 30px; }
+	.logoSeccion { width: 200px; }
+	.btnBackFloat { width: 55px; height: 55px; font-size: 30px; line-height: 51px; bottom: 10px; left: 10px; }
+
+	/*********************** FORMULARIO DE REGISTRO ***********************/
+	.registro .seccion1 { margin-top: 40px; }
+	.colRegistro li { width: 100%; }
+	.colRegistro h3 { font-size: 21px; padding: 10px; }
+
+	/*********************** PUNTO DE VENTA ***********************/
+	.puntoVenta .mapita { height: 250px; }
+
+	/*********************** HEADER ***********************/
+	header .top { padding: 5px; font-size: 15px; }
+	.logo { width: 180px; margin: 0px auto; float: none; }
+	.menu { width: 100%; }
+	.menu li { display: none; }
+	.btnSearch { display: block; z-index: 999; top: 30px; right: 20px; font-size: 25px; }
+	.cerrarBuscador i { font-size: 35px; }
+	.cerrarBuscador { top: 10px; right: 0; width: 40px; height: 35px; }
+	.formSearch { width: 300px; margin-left: -150px; margin-top: -45px; }
+	.submitSearch { font-size: 14px; margin: 0px auto; display: block; float: none; padding: 9px 20px; width: 150px; }
+	.inputSearch { font-size: 26px; }
+
+	/*********************** CALCULADORA ***********************/
+	.colCalculadora li { width: 100%; }
+	.colCalculadora .title { font-size: 20px; }
+	.imgSuperficie { width: 40px; }
+	.litrosNecesarios { font-size: 30px; }
+
+	/*********************** H1 - H6 ***********************/
+	h1, footer .seccion2 h1 { font-size: 25px; }
+
+	/*********************** HOME ***********************/
+	.botonRegistro { width: 100%; margin: 10px auto; }
+	.botonRegistro a { padding: 5px; }
+	.botonRegistro i { display: none; }
+	.conteCategorias { margin: 0px auto; }
+	.conteCategorias li { width: 50%; }
+	.conteCategorias li:nth-child(1) { width: 100%; }
+	.conteCategorias li:nth-child(1) a { height: 150px; }
+	.conteCategorias li a { height: 150px; }
+	.conteTituloCategoria span { font-size: 20px; text-align: center; font-size: 18px; padding: 5px; }
+
+	/*********************** QUIENES SOMOS ***********************/
+	.imgBote { width: 160px; }
+	.quienesSomos .seccion1 p { font-size: 16px; padding: 0; line-height: 22px; }
+	.quienesSomos ul.col4 { width: 100%; }
+	.quienesSomos ul.col4 li { padding: 0 5px; }
+
+	/*********************** PUNTO DE VENTA ***********************/
+	.puntoVenta select { width: 80%; }
+	.conteDistribuidor h2 { font-size: 19px; }
+	.conteDistribuidor li { width: 100%; text-align: center; }
+	.textUbicacion { padding-top: 10px; }
+
+	/*********************** FAQS ***********************/
+	.faqs select { width: 80%; }
+	.conteFaqs { width: 100%; }
+	.categoriaFaq { margin: 20px auto; }
+	.tituloFaq { padding: 5px 10px; }
+
+	/*********************** CONTACTO ***********************/
+	.mapitaContacto { height: 300px; }
+	.conteRojo { padding: 0; margin: 15px auto; }
+	.conteRojo h1 { font-size: 23px; }
+	.contenedorContacto { padding: 10px; }
+	.contenedorContacto::before { display: none; }
+	.contenedorContacto li { width: 100%; }
+	.contenedorContacto .padding { padding: 5px; }
+	.logoBlancoFooter { width: 150px; margin: 0px auto; }
+	.contenedorContacto h1 { text-align: center; }
+	.contenedorContacto p { text-align: center; }
+	.submitContacto { width: 100%; }
+
+	/*********************** CATEGORIAS ***********************/
+	.contePanMigas::after { height: 30px; bottom: -30px; }
+	.contenedorCategoria { padding-top: 30px; }
+	.descCategoria { font-size: 16px; padding: 0; }
+	.imgSubcategoria, .categoriaLogo { width: 300px; margin: 0px auto; }
+	.colTipo { width: 450px; margin: 0px auto; }
+	.colTipo li { width: 190px; }
+    .bgBote { width: 165px; height: 165px; margin: 0px auto; padding: 0 10px; }
+    .bgBote span { font-size: 15px; }
+    .itmeProducto { width: 33.33%; }
+    .itmeProductoBg { height: 180px; }
+    .imgProducto { width: 300px; float: none; margin: 0px auto; }
+	.thumbProducto { width: 200px; margin: 0px auto; }
+    .infoProducto { width: 100%; }
+    .infoProducto h1 { font-size: 30px; }
+    .infoProducto h3 { font-size: 19px; }
+    .infoProducto label, .conteRelacionados label { font-size: 17px; }
+    .itemPresentacion { width: 20%; }
+    .itemPresentacion img { width: 85px; }
+    .conteRelacionados label { display: -webkit-inline-box; }
+    .itemColor { width: 20%; }
+    .bgColor { width: 50px; height: 50px; }
+    .tituloPresentacion { font-size: 14px; }
+    .tituloProducto { font-size: 17px; }
+
+    /*********************** SIMULADOR ***********************/
+    .contenedorCategoriaSimulador h2 { font-size: 19px; }
+    .conteSimulador { width: 100%; }
+    .btnReset { padding: 3px; font-size: 19px; }
+    .contecombinaciones { width: 100%; padding: 0; border: none; }
+    .contecombinaciones h3 { padding: 5px; }
+
+	/*********************** BLOG ***********************/
+	.blog .bgBlanco { padding-top: 0; }
+	.colBlog1 { width: 320px; margin: 0px auto; float: none; }
+	.conteFecha { font-size: 15px; width: 140px; padding: 6px 0; margin-left: -70px; left: 50%; }
+	.triangulo_bottom { display: none; }
+	.contePost .conte { margin: 10px auto; margin-top: 20px; }
+	.contePost .conte .clear20 { height: 10px; }
+	.tituloPost { font-size: 16px; text-align: center; }
+	.imgPost { width: 100px; height: 80px; }
+    .descPost { width: 180px; }
+    .descPost, .descPost p { font-size: 13px; font-weight: 300; text-align: left; }
+    .btnMore { position: relative; float: none; margin: 0px auto; font-size: 14px; width: 130px; }
+    .pull-right { margin: 0px auto!important; float: none!important; }
+    .btnBlog { display: inline-block; }
+    .colBlog2 { position: fixed; width: 300px; top: 0; right: -300px; background: #FFF; z-index: 9999; height: 100%; border-bottom: 1px solid #af8a5f; }
+    .contePopulares, .conteCategoria { box-shadow: none; height: 28%; }
+	.contePopular { margin-bottom: 10px; }
+	.conteTitulo { font-size: 14px; position: relative; top: 0; left: 0; width: 100%; }
+	.conteTitulo { margin-bottom: 2px; }
+	.colBlog2 .padding { padding: 5px; height: 83%; overflow-x: hidden; overflow-y: scroll; }
+	.imgPopular { width: 25%; height: 55px; }
+	.tituloPopular { font-size: 12px; height: 40px; }
+	.infoPopular { width: 70%; }
+	.fechaPopular { font-size: 12px; }
+	.conteCategoria { margin-top: 0px; }
+	.conteCategoria .padding { height: 80%; overflow-x: hidden; overflow-y: scroll; }
+	.tituloCategoria { font-size: 14px; margin: 8px auto; }
+	.inputBuscador { font-size: 12px; }
+	.bgPost { height: 210px; }
+	.colVista { margin: 0px auto; }
+	.titlePost { font-size: 18px; }
+	.conteDescripcion p { font-size: 15px; font-weight: 500; }
+	.colSociales li .conte i { font-size: 19px; }
+	.submitComents { font-size: 15px; }
+	.formBuscador { width: 90%; margin: 0px auto; }
+	.inputComents, textarea.inputComents { width: 96%; }
+
+	/******************** CAPACITACIONES ********************/
+	.capacitaciones .seccion2 { padding: 10px 0; }
+	.capacitaciones .tema { width: 100%; float: none; padding: 0; margin-bottom: 30px; }
+	.capacitaciones .titulo { font-size: 20px; margin: 0px 0px 10px; }
+	.dropTema { display: none; }
+	.capacitaciones .contenido { padding: 0; }
+	.capacitaciones .tema .selectTema, .capacitaciones .tema .menuTema { overflow: hidden; }
+	.nombreTema { font-size: 17px; padding: 9px; display: table; float: left; margin: 0 6px; }
+	.capacitaciones .contenido { width: 100%; float: none; }
+	.conteCursos thead tr td { padding: 7px; font-size: 14px; }
+	.conteCursos thead tr td { width: 33.33%; }
+	.conteCursos tbody tr td { font-size: 14px; padding: 5px; }
+	.conteCursos tbody tr td a { font-size: 12px; padding: 5px 4px; }
+	.capacitaciones .conteVideo { width: 50%; padding: 5px; }
+	.capacitaciones .conteVideo .tituloVideo { font-size: 18px; padding: 8px 3px; }
+	.capacitaciones .conteVideo .descripcion { font-size: 16px; line-height: initial; height: auto; }
+	.capacitaciones .conteVideo .btnVideo { font-size: 14px; }
+	.capacitaciones-videos iframe { height: 450px; }
+	/*.capacitaciones.formFlotante { width: 450px; padding: 5px; }*/
+	/*.capacitaciones.formFlotante h1, .capacitaciones.formFlotante h3 { font-size: 24px; }*/
+	/*.capacitaciones.formFlotante h3 { font-size: 16px; }*/
+	.capacitaciones.registro-curso .seccion2 { padding: 20px 0px; }
+	.capacitaciones.registro-curso .seccion2::before { width: 339px;height: 550px; }
+	.capacitaciones.registro-curso .seccion2::after { width: 223px;height: 550px; }
+	.capacitaciones .noCurso { font-size: 30px; margin: 150px 0px; color: #fff; text-shadow: 0px 0px 8px rgb(0 0 0); font-weight: 700; }
+	.capacitaciones .conteForm { width: 450px;float: none;margin: 0px auto; }
+	.capacitaciones .conteForm h3 { color: #fff; text-shadow: 0px 0px 8px rgb(0 0 0); font-weight: 700; }
+	.capacitaciones .conteForm h1 { margin: 10px 0px 20px; text-shadow: 1px 1px 4px rgb(255 255 255 / 60%); }
+	.capacitaciones form .conteInput .input { width: 100%; }
+	.capacitaciones form .conteInput { margin-bottom: 0; }
+	.capacitaciones form input:not([type="submit"]), .capacitaciones form select { padding: 6px 7px; font-size: 14px; }
+	.capacitaciones form input:not([type="submit"]) { margin-bottom: 10px; }
+	.capacitaciones form input[type="submit"] { width: 100%; margin: 0px auto; padding: 5px; font-size: 15px; line-height: inherit; }
+	.capacitaciones .yaRegistrado { width: 100%;margin: 20px auto; }
+
+	/*********************** FOOTER ***********************/
+	footer .seccion1 .brocha { width: 80px; }
+	.seccionVideo { margin: 15px auto; }
+	.carruselBlog .bgThumb {  }
+	.carruselBlog { width: 450px!important; margin: 0px auto; }
+	.conteVideo { width: 450px; height: 300px; }
+	.carruselPanoramaArrow { left: 0; }
+	.carruselPanoramaRightArrow { left: inherit; right: 0; }
+	.carruselPanoramaArrow, .carruselPanoramaRightArrow { margin-top: -55px; }
+	.logoBlanco { width: 170px; }
+	.logoAniversario { width: 150px; margin-top: 0; }
+	footer .seccion2 { background: #CB1C34; padding: 10px 0; margin-top: 0; }
+	footer .seccion2_1 { background: #E9EBED; margin-top: 0; padding: 10px 0; }
+	footer .seccion2_2 { background-image: none; background: #FFF; margin-top: 0; }
+	footer .seccion3:before { display: none; }
+	footer .seccion3 ul .padding { padding: 0 5px; }
+	footer .seccion3 ul li { width: 100%; }
+	.submitContactoFooter { font-size: 18px; margin: 0px auto; float: none; }
+	footer .seccion3 { padding-bottom: 20px; }
+	footer .seccion4 { padding: 15px 0; }
+	footer .seccion4 ul {  }
+	footer .seccion4 li { width: 100%; margin: 10px; text-align: center; }
+	footer .seccion2_1 ul { width: 90%; }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+	/*********************** GENERAL ***********************/
+	.contenedor { width: 960px; }
+	body { padding-top: 119px; font-size: 15px; }
+	.tituloSeccion { padding: 35px 0; }
+	.tituloSeccion::after { height: 55px; bottom: -55px; }
+	.subtituloSeccion { margin-top: 55px; }
+	.subtituloSeccion h2 { font-size: 18px; padding: 13px 0; }
+	.subtituloSeccion::after { height: 70px; }
+	.logoSeccion { width: 230px; }
+	.btnBackFloat { width: 60px; height: 60px; font-size: 35px; line-height: 54px; bottom: 20px; left: 20px; }
+
+	/*********************** HEADER ***********************/
+	.logo { width: 250px; }
+	.menu { width: 650px; }
+	.menu a { padding: 31.5px 8px; }
+	
+	/*********************** HOME ***********************/
+	.botonRegistro { width: 650px; border: 3px solid #FFF; margin-top: -22px; }
+	.botonRegistro a { padding: 8px 50px; }
+	.botonRegistro i { font-size: 25px; }
+
+	/*********************** H1 - H6 ***********************/
+	h1 { font-size: 34px; }
+
+	/*********************** CARRUSEL CATEGORIA HOME ***********************/
+	.carruselCategoria .bgCategoria { height: 205px; }
+	.carruselCategoriaArrow, .carruselCategoriaRightArrow { font-style: 35px; }
+	.conteTituloCategoria span { font-size: 26px; }
+	.conteCategorias li a { height: 210px; }
+
+	/*********************** QUIENES SOMOS ***********************/
+	.imgBote { width: 180px; }
+	.quienesSomos .seccion1 p { font-size: 18px; line-height: 23px; padding: 0 220px; }
+	.quienesSomos ul.col4 { width: 650px; }
+	.quienesSomos ul.col4 li {  }
+
+	/*********************** PUNTO DE VENTA ***********************/
+	.puntoVenta select { width: 390px; font-size: 13px; height: 32px; }
+	.conteDistribuidor h2 { font-size: 20px; }
+
+	/*********************** FAQS ***********************/
+	.tituloFaq span { font-size: 13px; }
+	.descFaq { padding: 10px; }
+
+	/*********************** BLOG ***********************/
+	.conteFecha { font-size: 15px; }
+	.tituloPost { font-size: 22px; }
+	.imgPost { width: 140px; height: 130px; }
+	.descPost { width: 380px; font-size: 15px; }
+	.btnMore { padding: 5px 0px; width: 170px; } 
+	.contePost .conte { margin-top: 30px; margin: 20px auto; }
+	.colBlog2 .padding { padding: 27px 13px 1px 13px; }
+	.imgPopular { width: 85px; height: 55px; }
+	.infoPopular { width: 220px; }
+	.tituloCategoria { font-size: 15px; margin-top: 5px; margin-bottom: 5px; }
+	.tituloPopular { height: 38px; }
+	.bgPost { height: 400px; }
+	.titlePost { font-size: 22px; }
+	.submitComents { font-size: 15px; }
+	.submitBuscador i { font-size: 23px; }
+	.contePopular { margin-bottom: 20px; }
+
+	/******************** CAPACITACIONES ********************/
+	/*.capacitaciones .seccion2 { padding: 40px 0px; }
+	.capacitaciones .titulo { margin-bottom: 10px; }
+	.capacitaciones .tema { padding-right: 20px; }
+	.capacitaciones .contenido { padding-left: 20px; }
+	.capacitaciones .contenido .titulo { padding: 0px 15px; }
+	.nombreTema { font-size: 23px;line-height: 50px; }
+	.conteCursos, .conteDestacados, .conteTema { margin-bottom: 50px; }
+	.conteDestacados, .conteTema { padding: 15px; }
+	.conteCursos .conte.conteAzul { margin-bottom: 10px; }
+	.conteCursos .conte .item { font-size: 17px;line-height: 50px; }
+	.conteCursos .conte .btnRegistro { margin: 8px auto;width: 120px;padding: 8px 0px; }
+	.capacitaciones .conteVideo { padding: 8px; }
+	.capacitaciones .conteVideo .video { height: 120px; }
+	.capacitaciones .conteVideo .tituloVideo { height: 50px;font-size: 23px;line-height: 23px; }
+	.capacitaciones .conteVideo .descripcion { font-size: 17px;line-height: 18px; }
+	.capacitaciones .conteVideo .btnVideo { margin-top: 12px;width: 180px;font-size: 18px;line-height: 18px;padding: 8px 0px; }
+	.capacitaciones .clear40 { height: 30px; }
+	*/
+	.capacitaciones .titulo { margin: 0px 0px 10px; }
+	.nombreTema { font-size: 17px; padding: 11px; }
+	.capacitaciones .conteVideo .video { height: 150px; }
+	.capacitaciones .conteVideo .tituloVideo, .capacitaciones .conteVideo .descripcion { font-size: 16px; }
+	.capacitaciones .conteVideo .btnVideo { font-size: 15px; }
+	.capacitaciones-videos h2 { font-size: 27px; }
+	.capacitaciones-videos h4 { font-size: 17px; }
+
+	/****************** FORM CAPACITACIONES *****************/
+	/*.capacitaciones.formFlotante { width: 500px;padding: 25px;border-radius: 25px; }*/
+	/*.capacitaciones.formFlotante h1, .capacitaciones.formFlotante h3 { margin-bottom: 5px; }*/
+	/*.capacitaciones.formFlotante .img { width: 300px;margin: 15px auto; }*/
+	.capacitaciones.registro-curso .seccion2 { padding: 40px 0px 120px; }
+	.capacitaciones.registro-curso .seccion2::before { width: 348px;height: 565px; }
+	.capacitaciones.registro-curso .seccion2::after { width: 229px;height: 565px; }
+	.capacitaciones .conteForm { margin-right: 150px; }
+	.capacitaciones .conteForm h1 { margin: 10px 0px 30px; }
+	.capacitaciones form .conteInput { margin-bottom: 8px; }
+	.capacitaciones form ::placeholder, .capacitaciones form input:not([type="submit"]), .capacitaciones form select { font-size: 15px;line-height: 16px; }
+	.capacitaciones .yaRegistrado { margin: 30px auto; }
+
+	/*********************** CONTACTO ***********************/
+	.mapitaContacto { height: 400px; }
+	.conteRojo { padding: 15px 320px; }
+	.conteRojo h1 { font-size: 22px; }
+	.inputFooter { height: 32px; }
+	.logoBlancoFooter { width: 180px; }
+	.submitContacto { font-size: 18px; width: 340px; letter-spacing: 2px; }
+	.contenedorContacto { padding-top: 30px; padding-bottom: 20px; }
+
+	/*********************** CATEGORIAS ***********************/
+	.categoriaLogo { width: 300px; }
+	.itmeProductoBg { height: 190px; }
+	.contenedorCategoria { padding-top: 70px; }
+	.descCategoria { font-size: 17px; padding: 0 220px; }
+	.imgSubcategoria { width: 320px; margin-left: 110px; }
+	.bgBote { width: 180px; height: 180px; padding: 0 25px; }
+	.bgBote span { font-size: 15px; }
+
+	/*********************** PRODUCTO ***********************/
+	.imgProducto { width: 270px; }
+	.fichaTecnica i { font-size: 47px; }
+	.infoProducto { width: 620px; }
+	.infoProducto h1 { font-size: 31px; }
+	.infoProducto h1 span { font-size: 13px; }
+	.infoProducto h3 { font-size: 22px; }
+	.infoProducto label { font-size: 17px; }
+	.infoProducto label span { font-size: 15px; line-height: 16px; }
+	.itemPresentacion img { width: 75px; }
+	.itemPresentacionClick .title { font-size: 14px; }
+	.tituloPresentacion { font-size: 14px; }
+	.bgColor { width: 55px; height: 55px; }
+
+	/*********************** PRODUCTO ***********************/
+	.conteSimulador { width: 630px; }
+	.contecombinaciones { width: 320px; }
+	.colorSimulador { width: 10.7%; }
+	.itemSimulador { width: 40px; height: 40px; }
+	.itemSimulador i { font-size: 20px; }
+	.contecombinaciones h3 { font-size: 18px; }
+	.bgSimulador { height: 38px; }
+	.btnReset { font-size: 18px; padding: 4px; }
+
+	/*********************** FOOTER ***********************/
+	footer .seccion1 .brocha { width: 110px; }
+	.carruselBlog .bgThumb { height: 180px; }
+	.bgThumbHover i { font-size: 32px; margin-left: -15px; margin-top: -19px; }
+	.carruselBlog .categoriaThumb { font-size: 15px; }
+	.carruselBlog .tituloThumb { font-size: 15px; }
+	.logoBlanco { width: 250px; }
+	.logoAniversario { width: 230px; }
+	footer .seccion2 h1 { font-style: 28px; }
+	footer .seccion3 ul { width: 900px; margin: 0px auto; }
+	footer .seccion3 ul .padding {  }
+	.submitContactoFooter { font-size: 18px; width: 180px; }
+	footer .seccion4 li i { font-size: 30px; }
+	.conteVideo { width: 600px; height: 350px; }
+}
+
+@media (min-width: 1440px){
+
+}
+
+

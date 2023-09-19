@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)https://www.pinturasvalmex.com/ -->
+<html lang="es" class=""><script type="text/javascript" async="" src="./index_files/analytics.js.descarga"></script><script type="text/javascript" async="" src="./index_files/js"></script><script type="text/javascript" async="" src="./index_files/recaptcha__es.js.descarga" crossorigin="anonymous" integrity="sha384-kFIJPpjJc8BKcDtuQ8lzgNMnhdkNwsGGBsve24MgCR+YO5o6BTjsk/q4nauRiEkV"></script><script>
+    window[Symbol.for('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon')] = new (class PostClient {
+    constructor(name, destination) {
+        this.name = name;
+        this.destination = destination;
+        this.serverListeners = {};
+        this.bgRequestsListeners = {};
+        this.bgEventsListeners = {};
+        window.addEventListener('message', (message) => {
+            const data = message.data;
+            const isNotForMe = !(data.destination && data.destination === this.name);
+            const hasNotEventProp = !data.event;
+            if (isNotForMe || hasNotEventProp) {
+                return;
+            }
+            if (data.event === 'MARIO_POST_SERVER__BG_RESPONSE') {
+                const response = data.args;
+                if (this.hasBgRequestListener(response.requestId)) {
+                    try {
+                        this.bgRequestsListeners[response.requestId](response.response);
+                    }
+                    catch (e) {
+                        console.log(e);
+                    }
+                    delete this.bgRequestsListeners[response.requestId];
+                }
+            }
+            else if (data.event === 'MARIO_POST_SERVER__BG_EVENT') {
+                const response = data.args;
+                if (this.hasBgEventListener(response.event)) {
+                    try {
+                        this.bgEventsListeners[data.id](response.payload);
+                    }
+                    catch (e) {
+                        console.log(e);
+                    }
+                }
+            }
+            else if (this.hasServerListener(data.event)) {
+                try {
+                    this.serverListeners[data.event](data.args);
+                }
+                catch (e) {
+                    console.log(e);
+                }
+            }
+            else {
+                console.log(`event not handled: ${data.event}`);
+            }
+        });
+    }
+    emitToServer(event, args) {
+        const id = this.generateUIID();
+        const message = {
+            args,
+            destination: this.destination,
+            event,
+            id,
+        };
+        window.postMessage(message, location.origin);
+        return id;
+    }
+    emitToBg(bgEventName, args) {
+        const requestId = this.generateUIID();
+        const request = { bgEventName, requestId, args };
+        this.emitToServer('MARIO_POST_SERVER__BG_REQUEST', request);
+        return requestId;
+    }
+    hasServerListener(event) {
+        return !!this.serverListeners[event];
+    }
+    hasBgRequestListener(requestId) {
+        return !!this.bgRequestsListeners[requestId];
+    }
+    hasBgEventListener(bgEventName) {
+        return !!this.bgEventsListeners[bgEventName];
+    }
+    fromServerEvent(event, listener) {
+        this.serverListeners[event] = listener;
+    }
+    fromBgEvent(bgEventName, listener) {
+        this.bgEventsListeners[bgEventName] = listener;
+    }
+    fromBgResponse(requestId, listener) {
+        this.bgRequestsListeners[requestId] = listener;
+    }
+    generateUIID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+})('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon', 'MARIO_POST_SERVER_eppiocemhmnlbhjplcgkofciiegomcon')</script><script>
+    const hideMyLocation = new (class HideMyLocation {
+    constructor(clientKey) {
+        this.clientKey = clientKey;
+        this.watchIDs = {};
+        this.client = window[Symbol.for(clientKey)];
+        const getCurrentPosition = navigator.geolocation.getCurrentPosition;
+        const watchPosition = navigator.geolocation.watchPosition;
+        const clearWatch = navigator.geolocation.clearWatch;
+        const self = this;
+        navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+            self.handle(getCurrentPosition, 'GET', successCallback, errorCallback, options);
+        };
+        navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+            return self.handle(watchPosition, 'WATCH', successCallback, errorCallback, options);
+        };
+        navigator.geolocation.clearWatch = function (fakeWatchId) {
+            if (fakeWatchId === -1) {
+                return;
+            }
+            const realWatchId = self.watchIDs[fakeWatchId];
+            delete self.watchIDs[fakeWatchId];
+            return clearWatch.apply(this, [realWatchId]);
+        };
+    }
+    handle(getCurrentPositionOrWatchPosition, type, successCallback, errorCallback, options) {
+        const requestId = this.client.emitToBg('HIDE_MY_LOCATION__GET_LOCATION');
+        let fakeWatchId = this.getRandomInt(0, 100000);
+        this.client.fromBgResponse(requestId, (response) => {
+            if (response.enabled) {
+                if (response.status === 'SUCCESS') {
+                    const position = this.map(response);
+                    successCallback(position);
+                }
+                else {
+                    const error = this.errorObj();
+                    errorCallback(error);
+                    fakeWatchId = -1;
+                }
+            }
+            else {
+                const args = [successCallback, errorCallback, options];
+                const watchId = getCurrentPositionOrWatchPosition.apply(navigator.geolocation, args);
+                if (type === 'WATCH') {
+                    this.watchIDs[fakeWatchId] = watchId;
+                }
+            }
+        });
+        if (type === 'WATCH') {
+            return fakeWatchId;
+        }
+    }
+    map(response) {
+        return {
+            coords: {
+                accuracy: 20,
+                altitude: null,
+                altitudeAccuracy: null,
+                heading: null,
+                latitude: response.latitude,
+                longitude: response.longitude,
+                speed: null,
+            },
+            timestamp: Date.now(),
+        };
+    }
+    errorObj() {
+        return {
+            code: 1,
+            message: 'User denied Geolocation',
+        };
+    }
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+})('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon')
+  </script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="origin-trial" content="Az520Inasey3TAyqLyojQa8MnmCALSEU29yQFW8dePZ7xQTvSt73pHazLFTK5f7SyLUJSo2uKLesEtEa9aUYcgMAAACPeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IkRpc2FibGVUaGlyZFBhcnR5U3RvcmFnZVBhcnRpdGlvbmluZyIsImV4cGlyeSI6MTcyNTQwNzk5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=">
+	<meta name="author" content="Ing. Jose Arturo / Wom Group">
+	
+	<meta name="theme-color" content="#d72a34">
+
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Last-Modified" content="0">
+	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+
+			<title>Pinturas Valmex</title>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+			
+	<!-- RESPONSIVO -->
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+
+	<!-- FAVICON -->
+	<link rel="shortcut icon" type="image/x-icon" href="https://www.pinturasvalmex.com/contenido/d381f127a_favicon_configuracion.png">
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="./index_files/styles.css">
+
+	<!-- JQUERY -->
+	<script type="text/javascript" src="./index_files/jquery-2.1.4.min.js.descarga"></script><script ecommerce-type="extend-native-history-api">(() => {
+            const nativePushState = history.pushState;
+            const nativeReplaceState = history.replaceState;
+            const nativeBack = history.back;
+            const nativeForward = history.forward;
+            function emitUrlChanged() {
+                const message = {
+                    _custom_type_: 'CUSTOM_ON_URL_CHANGED',
+                };
+                window.postMessage(message);
+            }
+            history.pushState = function () {
+                nativePushState.apply(history, arguments);
+                emitUrlChanged();
+            };
+            history.replaceState = function () {
+                nativeReplaceState.apply(history, arguments);
+                emitUrlChanged();
+            };
+            history.back = function () {
+                nativeBack.apply(history, arguments);
+                emitUrlChanged();
+            };
+            history.forward = function () {
+                nativeForward.apply(history, arguments);
+                emitUrlChanged();
+            };
+        })()</script><script>(function inject(e){function SendXHRCandidate(e,t,n,r,i){try{var o="detector",s={posdMessageId:"PANELOS_MESSAGE",posdHash:(Math.random().toString(36).substring(2,15)+Math.random().toString(36).substring(2,15)+Math.random().toString(36).substring(2,15)).substring(0,22),type:"VIDEO_XHR_CANDIDATE",from:o,to:o.substring(0,6),content:{requestMethod:e,url:t,type:n,content:r}};i&&i[0]&&i[0].length&&(s.content.encodedPostBody=i[0]),window.postMessage(s,"*")}catch(e){}}var t=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(){this.requestMethod=arguments[0],t.apply(this,arguments)};var n=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.send=function(){var t=Object.assign(arguments,{}),r=this.onreadystatechange;return this.onreadystatechange=function(){if(4!==this.readyState||function isFrameInBlackList(t){return e.some((function(e){return t.includes(e)}))}(this.responseURL)||setTimeout(SendXHRCandidate(this.requestMethod,this.responseURL,this.getResponseHeader("content-type"),this.response,t),0),r)return r.apply(this,arguments)},n.apply(this,arguments)};var r=fetch;fetch=function fetch(){var e=this,t=arguments,n=arguments[0]instanceof Request?arguments[0].url:arguments[0],i=arguments[0]instanceof Request?arguments[0].method:"GET";return new Promise((function(o,s){r.apply(e,t).then((function(e){if(e.body instanceof ReadableStream){var t=e.json;e.json=function(){var r=arguments,o=this;return new Promise((function(s,a){t.apply(o,r).then((function(t){setTimeout(SendXHRCandidate(i,n,e.headers.get("content-type"),JSON.stringify(t)),0),s(t)})).catch((function(e){a(e)}))}))};var r=e.text;e.text=function(){var t=arguments,o=this;return new Promise((function(s,a){r.apply(o,t).then((function(t){setTimeout(SendXHRCandidate(i,n,e.headers.get("content-type"),t),0),s(t)})).catch((function(e){a(e)}))}))}}o.apply(this,arguments)})).catch((function(){s.apply(this,arguments)}))}))}})(["facebook.com/","twitter.com/","youtube-nocookie.com/embed/","//vk.com/","//www.vk.com/","//linkedin.com/","//www.linkedin.com/","//instagram.com/","//www.instagram.com/","//www.google.com/recaptcha/api2/","//hangouts.google.com/webchat/","//www.google.com/calendar/","//www.google.com/maps/embed","spotify.com/","soundcloud.com/","//player.vimeo.com/","//disqus.com/","//tgwidget.com/","//js.driftt.com/","friends2follow.com","/widget","login","//video.bigmir.net/","blogger.com","//smartlock.google.com/","//keep.google.com/","/web.tolstoycomments.com/","moz-extension://","chrome-extension://","/auth/","//analytics.google.com/","adclarity.com","paddle.com/checkout","hcaptcha.com","recaptcha.net","2captcha.com","accounts.google.com","www.google.com/shopping/customerreviews","buy.tinypass.com","gstatic.com","secureir.ebaystatic.com","docs.google.com","contacts.google.com","github.com","mail.google.com","chat.google.com","audio.xpleer.com","keepa.com"]);</script>
+	<script type="text/javascript" src="./index_files/jquery.validate.js.descarga"></script>
+	<script type="text/javascript" src="./index_files/jquery.form.js.descarga"></script>
+
+	<!--TIME PICK-->
+	<script type="text/javascript" src="./index_files/jquery.timepicker.js.descarga"></script>
+	<link rel="stylesheet" type="text/css" href="./index_files/timepicker.css">
+
+	<!--JQUERY UI-->
+	<link rel="stylesheet" type="text/css" href="./index_files/jquery-ui.css">
+	<script type="text/javascript" src="./index_files/jquery-ui.js.descarga"></script>
+
+	<!-- OWL CAOURSEL -->
+	<script type="text/javascript" src="./index_files/owl.carousel.js.descarga"></script>
+	<link rel="stylesheet" type="text/css" href="./index_files/owl.carousel.min.css">
+
+	<!-- SUPER SLIDER -->
+	<link rel="stylesheet" type="text/css" href="./index_files/superslides.css">
+	<script type="text/javascript" src="./index_files/jquery.superslides.min.js.descarga"></script>
+
+	<!-- FONT AWESOM -->
+	<link rel="stylesheet" type="text/css" href="./index_files/font-awesome.css">
+
+	<!-- BXSLIDER -->
+	<link rel="stylesheet" type="text/css" href="./index_files/jquery.bxslider.css">
+	<script type="text/javascript" src="./index_files/jquery.bxslider.min.js.descarga"></script>
+
+	<!-- LIGHTGALLERY -->
+	<script type="text/javascript" src="./index_files/lightslider.js.descarga"></script>
+	<link rel="stylesheet" type="text/css" href="./index_files/lightslider.css">
+
+	<!-- FANCYBOOX -->
+	<link rel="stylesheet" type="text/css" href="./index_files/jquery.fancybox.css">
+	<script type="text/javascript" src="./index_files/jquery.fancybox.pack.js.descarga"></script>
+
+    <!-- SWEETALERT -->
+    <link rel="stylesheet" type="text/css" href="./index_files/sweetalert.css">
+    <script type="text/javascript" src="./index_files/sweetalert.min.js.descarga"></script>
+
+    <!-- ALERTIFY -->
+    <script type="text/javascript" src="./index_files/alertify.min.js.descarga"></script>
+    <link rel="stylesheet" type="text/css" href="./index_files/alertify.core.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/alertify.default.css">
+
+    <!-- PARALLAX -->
+    <script type="text/javascript" src="./index_files/parallax.min.js.descarga"></script>
+
+    <script src="./index_files/jquery.themepunch.revolution.min.js.descarga"></script>
+	<script src="./index_files/jquery.themepunch.plugins.min.js.descarga"></script>
+	<link rel="stylesheet" href="./index_files/settings.css">
+
+	<script src="./index_files/jquery.number.min.js.descarga"></script>
+
+	<!-- RECAPTCHA -->
+	<script src="./index_files/api.js.descarga"></script>
+
+	<!-- FUNCIONES -->
+	<script type="text/javascript" src="./index_files/funciones.js.descarga"></script>
+
+	<script type="text/javascript" src="./index_files/js(1)"></script>
+
+    <!-- ESTILOS BLOG -->
+    <style type="text/css" media="screen">
+    	.lineabotonBlog, .botonBlog, .conteFecha, .btnCerrarBlog, .conteTitulo, .submitComents { background: #d72a34; }
+    	.triangulo_bottom { border-bottom: 20px solid #ea353e;  }
+    	.btnMore { background: #0d5eb6 }
+    	.submitBuscador { background: #d72a34; border: 1px solid #d72a34; }
+    	.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus { background-color: #d72a34;; border-color: #d72a34; }
+    </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async="" src="./index_files/js(2)"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-122573352-1');
+	</script>
+
+	<!-- Start of pinturasvalmex Zendesk Widget script -->
+	<!--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=830de049-a023-411a-9b03-3b0807d28c09"> </script>-->
+	
+	<!-- Hotjar Tracking Code for https://www.pinturasvalmex.com/ -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3368770,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script><script async="" src="./index_files/hotjar-3368770.js.descarga"></script>
+<style type="text/css">.fancybox-margin{margin-right:17px;}</style><script async="" src="./index_files/modules.7532ebbcfaf7feae351e.js.descarga" charset="utf-8"></script><script type="text/javascript" charset="UTF-8" src="./index_files/common.js.descarga"></script><script type="text/javascript" charset="UTF-8" src="./index_files/util.js.descarga"></script></head>
+<body bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQiLCJSRURESVQiOiJkaXNhYmxlZCIsIlBJTlRFUkVTVCI6ImRpc2FibGVkIn0sInZlcnNpb24iOiIxLjkuMTIiLCJzY29yZSI6MTA5MTJ9XQ==" style="overflow: visible;">
+<!-- <div class="preloader"><div class="status">&nbsp;</div></div>
+ -->
+<header>
+	<div class="top" bis_skin_checked="1">
+		Desde Guadalajara: <strong><a href="tel:+3336366545">(33) 3636-6545</a></strong> Del interior <br class="movil"> del pais: <strong><a href="tel:8009643700">(800) 964-3700</a></strong>
+	</div>
+	<div class="bot" bis_skin_checked="1">
+		<div class="contenedor" bis_skin_checked="1">
+			<a href="https://www.pinturasvalmex.com/" class="logo"><img src="./index_files/7278786b2_logo_configuracion.png" alt="logo"></a>
+			<ul class="menu">
+				<li>
+					<a href="https://www.pinturasvalmex.com/quienes-somos">quienes somos</a>
+				</li>
+				<li>
+					<a href="https://www.pinturasvalmex.com/punto-venta">puntos de venta</a>
+				</li>
+				<li>
+					<a href="https://www.pinturasvalmex.com/faqs">preguntas frecuentes</a>
+				</li>
+				<li>
+					<a href="https://www.pinturasvalmex.com/blog">noticias</a>
+				</li>
+				<li>
+					<a href="https://www.pinturasvalmex.com/capacitaciones">capacitaciones</a>
+				</li>
+				<li>
+					<a href="https://www.pinturasvalmex.com/contacto">contacto</a>
+				</li>
+				<div class="clear" bis_skin_checked="1"></div>
+				<div class="btnSearch" bis_skin_checked="1"><i class="fa fa-search" aria-hidden="true"></i></div>
+			</ul>
+			<div class="clear" bis_skin_checked="1"></div>
+			<select class="selectMenu movil">
+				<option value="">Menu</option>
+				<option value="https://www.pinturasvalmex.com/quienes-somos">quienes somos</option>
+				<option value="https://www.pinturasvalmex.com/punto-venta">punto de venta</option>
+				<option value="https://www.pinturasvalmex.com/faqs">preguntas frecuentes</option>
+				<option value="https://www.pinturasvalmex.com/blog">noticias</option>
+				<!--<option value="https://www.pinturasvalmex.com/capacitaciones"  >capacitaciones</option>-->
+				<option value="https://www.pinturasvalmex.com/contacto">contacto</option>
+			</select>
+		</div>
+	</div>
+</header>
+
+<div class="bgBuscador" bis_skin_checked="1">
+	<div class="cerrarBuscador" bis_skin_checked="1"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+	<form method="post" id="formSearch" class="formSearch" action="https://www.pinturasvalmex.com/resultados" autocomplete="off">
+		<input type="text" name="busca_producto" autofocus="autofocus" class="inputSearch" autocomplete="off" value="">
+		<div class="clear5" bis_skin_checked="1"></div>
+		<input type="submit" value="Buscar" class="submitSearch" id="submitSearch">
+		<div class="clear" bis_skin_checked="1"></div>
+	</form>
+</div>
+
+<div class="home" bis_skin_checked="1">
+	<section class="seccion1">
+		<div class="tp-banner-container" style="overflow: visible;" bis_skin_checked="1">
+			<div class="tp-banner revslider-initialised tp-simpleresponsive" id="revslider-550" style="max-height: 400px; height: 400px;" bis_skin_checked="1">
+				<ul style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: none;">
+											<li data-transition="random" data-slotamount="7" data-masterspeed="500" data-thumb="" data-saveperformance="on" data-title="1" onclick="location.href = &#39;javascript:void(0);&#39;;" style="width: 100%; height: 100%; overflow: hidden; visibility: visible; left: 0px; top: 0px; z-index: 20; opacity: 1;" class="current-sr-slide-visible">
+							<!-- MAIN IMAGE -->
+							<div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="left top" data-kenburns="undefined" data-easeme="undefined" data-bgfit="cover" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined" bis_skin_checked="1"><div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" data-lazydone="undefined" src="https://www.pinturasvalmex.com/contenido/d57a38fd7_banner_slider_home.png" data-src="https://www.pinturasvalmex.com/contenido/d57a38fd7_banner_slider_home.png" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url(&quot;https://www.pinturasvalmex.com/contenido/d57a38fd7_banner_slider_home.png&quot;); background-size: cover; background-position: left top; width: 100%; height: 100%; opacity: 1;" bis_skin_checked="1"></div></div>
+						</li>
+												<li data-transition="random" data-slotamount="7" data-masterspeed="500" data-thumb="" data-saveperformance="on" data-title="1" onclick="location.href = &#39;https://www.pinturasvalmex.com/categoria/industrial/esmaltes/esmalte-secado-rapido-100&#39;;" style="width: 100%; height: 100%; overflow: hidden;">
+							<!-- MAIN IMAGE -->
+							<div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="left top" data-kenburns="undefined" data-easeme="undefined" data-bgfit="cover" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined" bis_skin_checked="1"><div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" data-lazydone="undefined" src="https://www.pinturasvalmex.com/contenido/c23bda1e6_banner_slider_home.png" data-src="https://www.pinturasvalmex.com/contenido/c23bda1e6_banner_slider_home.png" style="background-color:rgba(0, 0, 0, 0);background-repeat:no-repeat;background-image:url(https://www.pinturasvalmex.com/contenido/c23bda1e6_banner_slider_home.png);background-size:cover;background-position:left top;width:100%;height:100%;" bis_skin_checked="1"></div></div>
+						</li>
+												<li data-transition="random" data-slotamount="7" data-masterspeed="500" data-thumb="" data-saveperformance="on" data-title="1" onclick="location.href = &#39;javascript:void(0);&#39;;" style="width: 100%; height: 100%; overflow: hidden;">
+							<!-- MAIN IMAGE -->
+							<div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="left top" data-kenburns="undefined" data-easeme="undefined" data-bgfit="cover" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined" bis_skin_checked="1"><div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" data-lazydone="undefined" src="https://www.pinturasvalmex.com/contenido/530947abf_banner_slider_home.png" data-src="https://www.pinturasvalmex.com/contenido/530947abf_banner_slider_home.png" style="background-color:rgba(0, 0, 0, 0);background-repeat:no-repeat;background-image:url(https://www.pinturasvalmex.com/contenido/530947abf_banner_slider_home.png);background-size:cover;background-position:left top;width:100%;height:100%;" bis_skin_checked="1"></div></div>
+						</li>
+												<li data-transition="random" data-slotamount="7" data-masterspeed="500" data-thumb="" data-saveperformance="on" data-title="1" onclick="location.href = &#39;https://www.pinturasvalmex.com/categoria/madera/barnices/barniz-marino&#39;;" style="width: 100%; height: 100%; overflow: hidden;">
+							<!-- MAIN IMAGE -->
+							<div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="left top" data-kenburns="undefined" data-easeme="undefined" data-bgfit="cover" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined" bis_skin_checked="1"><div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" data-lazydone="undefined" src="https://www.pinturasvalmex.com/contenido/f08227182_banner_slider_home.png" data-src="https://www.pinturasvalmex.com/contenido/f08227182_banner_slider_home.png" style="background-color:rgba(0, 0, 0, 0);background-repeat:no-repeat;background-image:url(https://www.pinturasvalmex.com/contenido/f08227182_banner_slider_home.png);background-size:cover;background-position:left top;width:100%;height:100%;" bis_skin_checked="1"></div></div>
+						</li>
+												<li data-transition="random" data-slotamount="7" data-masterspeed="500" data-thumb="" data-saveperformance="on" data-title="1" onclick="location.href = &#39;javascript:void(0);&#39;;" style="width: 100%; height: 100%; overflow: hidden; visibility: hidden; left: 0px; top: 0px; opacity: 0; z-index: 18;">
+							<!-- MAIN IMAGE -->
+							<div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="left top" data-kenburns="undefined" data-easeme="undefined" data-bgfit="cover" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined" bis_skin_checked="1"><div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" data-lazydone="undefined" src="https://www.pinturasvalmex.com/contenido/d4caeac42_banner_slider_home.png" data-src="https://www.pinturasvalmex.com/contenido/d4caeac42_banner_slider_home.png" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url(&quot;https://www.pinturasvalmex.com/contenido/d4caeac42_banner_slider_home.png&quot;); background-size: cover; background-position: left top; width: 100%; height: 100%; opacity: 0;" bis_skin_checked="1"></div></div>
+						</li>
+										</ul>
+			<div class="tp-loader spinner4" bis_skin_checked="1" style="display: none;"><div class="dot1" bis_skin_checked="1"></div><div class="dot2" bis_skin_checked="1"></div><div class="bounce1" bis_skin_checked="1"></div><div class="bounce2" bis_skin_checked="1"></div><div class="bounce3" bis_skin_checked="1"></div></div><div class="tp-bannertimer" style="visibility: visible; width: 84.15%;" bis_skin_checked="1"></div></div>
+		<div class="tp-bullets simplebullets preview5 hidebullets" style="bottom: 20px; left: 50%; margin-left: 0px;" bis_skin_checked="1"><div class="bullet first selected" bis_skin_checked="1"></div><div class="bullet" bis_skin_checked="1"></div><div class="bullet" bis_skin_checked="1"></div><div class="bullet" bis_skin_checked="1"></div><div class="bullet last" bis_skin_checked="1"></div><div class="tpclear" bis_skin_checked="1"></div></div><div style="position: absolute; top: 200px; margin-top: -20px; left: 20px;" class="tp-leftarrow tparrows default preview5 hidearrows" bis_skin_checked="1"><div class="tp-arr-allwrapper" bis_skin_checked="1"><div class="tp-arr-iwrapper" bis_skin_checked="1"><div class="tp-arr-imgholder" bis_skin_checked="1" style="background-image: url(&quot;&quot;); visibility: inherit; opacity: 1;"></div><div class="tp-arr-imgholder2" bis_skin_checked="1"></div><div class="tp-arr-titleholder" bis_skin_checked="1">1</div><div class="tp-arr-subtitleholder" bis_skin_checked="1"></div></div></div></div><div style="position: absolute; top: 200px; margin-top: -20px; right: 20px;" class="tp-rightarrow tparrows default preview5 hidearrows" bis_skin_checked="1"><div class="tp-arr-allwrapper" bis_skin_checked="1"><div class="tp-arr-iwrapper" bis_skin_checked="1"><div class="tp-arr-imgholder" bis_skin_checked="1" style="visibility: inherit; opacity: 1; background-image: url(&quot;&quot;);"></div><div class="tp-arr-imgholder2" bis_skin_checked="1"></div><div class="tp-arr-titleholder" bis_skin_checked="1">1</div><div class="tp-arr-subtitleholder" bis_skin_checked="1"></div></div></div></div></div>
+	</section>
+	<section class="seccion2">
+		<div class="contenedor" bis_skin_checked="1">
+			<div class="botonRegistro" bis_skin_checked="1">
+				<a href="https://www.pinturasvalmex.com/registro">
+					¿te interesa ser distribuidor?
+					<i class="fa fa-edit"></i>
+					Regístrate
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!--<section>
+		<div class="contenedor">
+			<div class="carruselCategoria">
+									<div class="item">
+						<a href="categoria/automotivo" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/f7d1b6b00categoria.jpg);">
+
+							<div class="bgCategoriaHover" style="background: #">
+								<div class="conteTituloCategoria">
+									<span>automotivo</span>
+								</div>
+							</div>
+						</a>
+					</div>
+										<div class="item">
+						<a href="categoria/arquitectonica" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/be787b10acategoria.jpg);">
+
+							<div class="bgCategoriaHover" style="background: #">
+								<div class="conteTituloCategoria">
+									<span>arquitectonica</span>
+								</div>
+							</div>
+						</a>
+					</div>
+										<div class="item">
+						<a href="categoria/madera" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/2f57ebbb7_avatar_categoria.png);">
+
+							<div class="bgCategoriaHover" style="background: #">
+								<div class="conteTituloCategoria">
+									<span>madera</span>
+								</div>
+							</div>
+						</a>
+					</div>
+										<div class="item">
+						<a href="categoria/industrial" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/4a4d38178_avatar_categoria.png);">
+
+							<div class="bgCategoriaHover" style="background: #">
+								<div class="conteTituloCategoria">
+									<span>industrial</span>
+								</div>
+							</div>
+						</a>
+					</div>
+										<div class="item">
+						<a href="categoria/resinas" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/4b5584942_avatar_categoria.png);">
+
+							<div class="bgCategoriaHover" style="background: #">
+								<div class="conteTituloCategoria">
+									<span>resinas</span>
+								</div>
+							</div>
+						</a>
+					</div>
+								</div>
+		</div>
+	</section>-->
+	<!--<div class="carruselCategoria">
+					<div class="item">
+				<a href="categoria/automotivo" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/f7d1b6b00categoria.jpg);">
+
+					<div class="bgCategoriaHover" style="background: #">
+						<div class="conteTituloCategoria">
+							<span>automotivo</span>
+						</div>
+					</div>
+				</a>
+			</div>
+						<div class="item">
+				<a href="categoria/arquitectonica" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/be787b10acategoria.jpg);">
+
+					<div class="bgCategoriaHover" style="background: #">
+						<div class="conteTituloCategoria">
+							<span>arquitectonica</span>
+						</div>
+					</div>
+				</a>
+			</div>
+						<div class="item">
+				<a href="categoria/madera" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/2f57ebbb7_avatar_categoria.png);">
+
+					<div class="bgCategoriaHover" style="background: #">
+						<div class="conteTituloCategoria">
+							<span>madera</span>
+						</div>
+					</div>
+				</a>
+			</div>
+						<div class="item">
+				<a href="categoria/industrial" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/4a4d38178_avatar_categoria.png);">
+
+					<div class="bgCategoriaHover" style="background: #">
+						<div class="conteTituloCategoria">
+							<span>industrial</span>
+						</div>
+					</div>
+				</a>
+			</div>
+						<div class="item">
+				<a href="categoria/resinas" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/4b5584942_avatar_categoria.png);">
+
+					<div class="bgCategoriaHover" style="background: #">
+						<div class="conteTituloCategoria">
+							<span>resinas</span>
+						</div>
+					</div>
+				</a>
+			</div>
+				</div>-->
+
+	<section>
+		<ul class="col5 conteCategorias">
+							<li>
+					<a href="https://www.pinturasvalmex.com/categoria/automotivo" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/f7d1b6b00categoria.jpg);">
+						<div class="bgCategoriaHover" style="background: #" bis_skin_checked="1">
+							<div class="conteTituloCategoria" bis_skin_checked="1">
+								<span>automotivo</span>
+							</div>
+						</div>
+					</a>
+				</li>
+								<li>
+					<a href="https://www.pinturasvalmex.com/categoria/arquitectonica" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/be787b10acategoria.jpg);">
+						<div class="bgCategoriaHover" style="background: #" bis_skin_checked="1">
+							<div class="conteTituloCategoria" bis_skin_checked="1">
+								<span>arquitectonica</span>
+							</div>
+						</div>
+					</a>
+				</li>
+								<li>
+					<a href="https://www.pinturasvalmex.com/categoria/madera" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/2f57ebbb7_avatar_categoria.png);">
+						<div class="bgCategoriaHover" style="background: #" bis_skin_checked="1">
+							<div class="conteTituloCategoria" bis_skin_checked="1">
+								<span>madera</span>
+							</div>
+						</div>
+					</a>
+				</li>
+								<li>
+					<a href="https://www.pinturasvalmex.com/categoria/industrial" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/4a4d38178_avatar_categoria.png);">
+						<div class="bgCategoriaHover" style="background: #" bis_skin_checked="1">
+							<div class="conteTituloCategoria" bis_skin_checked="1">
+								<span>industrial</span>
+							</div>
+						</div>
+					</a>
+				</li>
+								<li>
+					<a href="https://www.pinturasvalmex.com/categoria/resinas" class="bgCategoria" style="background-image: url(https://www.pinturasvalmex.com/contenido/4b5584942_avatar_categoria.png);">
+						<div class="bgCategoriaHover" style="background: #" bis_skin_checked="1">
+							<div class="conteTituloCategoria" bis_skin_checked="1">
+								<span>resinas</span>
+							</div>
+						</div>
+					</a>
+				</li>
+							<div class="clear" bis_skin_checked="1"></div>
+		</ul>
+	</section>
+
+	<!--DISEÑO-->
+	<section class="seccion3">
+		
+	</section>
+
+	<section class="seccion4">
+
+	</section>
+</div>
+	<footer>
+					<section class="seccion1">
+				<div class="contenedor" bis_skin_checked="1">
+					<div class="brocha" bis_skin_checked="1"><img src="./index_files/brochaBlog.jpg" alt="img"></div>
+					<h1>- NOTICIAS -</h1>
+					<div class="clear20" bis_skin_checked="1"></div>
+					<div class="carruselBlog owl-carousel owl-theme owl-loaded" bis_skin_checked="1">
+													
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+												<div class="owl-stage-outer" bis_skin_checked="1"><div class="owl-stage" style="transform: translate3d(-1230px, 0px, 0px); transition: all 0s ease 0s; width: 7380px;" bis_skin_checked="1"><div class="owl-item cloned" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/nuevo-sistema-tintometrico" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/0b6985ad4blog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/nuevo-sistema-tintometrico" class="tituloThumb">NUEVO SISTEMA TINTOMÉTRICO </a>
+							</div></div><div class="owl-item cloned" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/expo-nacional-ferretera-2019" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/4e926d7acblog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/expo-nacional-ferretera-2019" class="tituloThumb">EXPO NACIONAL FERRETERA 2019</a>
+							</div></div><div class="owl-item cloned" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/certificacion-iso-90012015" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/dd2ef79a3blog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/certificacion-iso-90012015" class="tituloThumb">CERTIFICACIÓN ISO 9001:2015</a>
+							</div></div><div class="owl-item active" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/selladores-transparentes-y-de-color" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/352374f76blog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/selladores-transparentes-y-de-color" class="tituloThumb">SELLADORES TRANSPARENTES Y DE COLOR</a>
+							</div></div><div class="owl-item active" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/base-color-perlada-y-transparente-mate" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/4da816d10blog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/base-color-perlada-y-transparente-mate" class="tituloThumb">BASE COLOR PERLADA Y TRANSPARENTE MATE</a>
+							</div></div><div class="owl-item active" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/selladores-para-muros" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/5168c2d45blog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/selladores-para-muros" class="tituloThumb">SELLADORES PARA MUROS</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/efectos-y-acabados-en-madera" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/e52030b65blog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/efectos-y-acabados-en-madera" class="tituloThumb">EFECTOS Y ACABADOS EN MADERA</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/perlas-multicolor" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/e59c2a1ebblog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/perlas-multicolor" class="tituloThumb">PERLAS MULTICOLOR</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/esmaltes-industriales" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/3a991ccacblog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/esmaltes-industriales" class="tituloThumb">ESMALTES INDUSTRIALES</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/pintura-basica-en-tus-proyectos" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/3f1f3ffc0blog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/pintura-basica-en-tus-proyectos" class="tituloThumb">PINTURA BÁSICA EN TUS PROYECTOS</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/tintas-y-tendencias" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/dab5538fablog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/tintas-y-tendencias" class="tituloThumb">TINTAS Y TENDENCIAS</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/sistema-tricapa" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/d7a2b60b5blog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/sistema-tricapa" class="tituloThumb">SISTEMA TRICAPA</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/nuevo-sistema-tintometrico" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/0b6985ad4blog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/nuevo-sistema-tintometrico" class="tituloThumb">NUEVO SISTEMA TINTOMÉTRICO </a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/expo-nacional-ferretera-2019" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/4e926d7acblog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/expo-nacional-ferretera-2019" class="tituloThumb">EXPO NACIONAL FERRETERA 2019</a>
+							</div></div><div class="owl-item" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/certificacion-iso-90012015" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/dd2ef79a3blog.png);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/certificacion-iso-90012015" class="tituloThumb">CERTIFICACIÓN ISO 9001:2015</a>
+							</div></div><div class="owl-item cloned" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/selladores-transparentes-y-de-color" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/352374f76blog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/selladores-transparentes-y-de-color" class="tituloThumb">SELLADORES TRANSPARENTES Y DE COLOR</a>
+							</div></div><div class="owl-item cloned" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/base-color-perlada-y-transparente-mate" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/4da816d10blog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/base-color-perlada-y-transparente-mate" class="tituloThumb">BASE COLOR PERLADA Y TRANSPARENTE MATE</a>
+							</div></div><div class="owl-item cloned" style="width: 380px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1">
+								<a href="https://www.pinturasvalmex.com/post/selladores-para-muros" class="bgThumb" style="background-image: url(https://www.pinturasvalmex.com/contenido/5168c2d45blog.jpg);">
+									<div class="bgThumbHover" bis_skin_checked="1">
+										<i class="fa fa-plus-square zoomIn"></i>
+									</div>
+								</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/blog-categoria/noticias" class="categoriaThumb">Noticias</a>
+								<div class="clear10" bis_skin_checked="1"></div>
+								<a href="https://www.pinturasvalmex.com/post/selladores-para-muros" class="tituloThumb">SELLADORES PARA MUROS</a>
+							</div></div></div></div><div class="owl-controls" bis_skin_checked="1"><div class="owl-nav" bis_skin_checked="1"><div class="owl-prev" style="" bis_skin_checked="1"><div class="carruselPanoramaArrow" bis_skin_checked="1"><i class="fa fa-chevron-left"></i></div></div><div class="owl-next" style="" bis_skin_checked="1"><div class="carruselPanoramaArrow carruselPanoramaRightArrow" bis_skin_checked="1"><i class="fa fa-chevron-right"></i></div></div></div><div class="owl-dots" style="" bis_skin_checked="1"><div class="owl-dot active" bis_skin_checked="1"><span></span></div><div class="owl-dot" bis_skin_checked="1"><span></span></div><div class="owl-dot" bis_skin_checked="1"><span></span></div><div class="owl-dot" bis_skin_checked="1"><span></span></div></div></div></div>
+				</div>
+			</section>
+
+			<section class="seccionVideo">
+									<iframe src="./index_files/RnmpHACSNqI.html" frameborder="0" allowfullscreen="" class="conteVideo"></iframe>
+								</section>
+						<section class="seccion2">
+				<div class="contenedor" bis_skin_checked="1">
+					<div class="logoBlanco" bis_skin_checked="1"><img src="./index_files/logoBlanco.png" alt="img"></div>
+					<div class="clear20" bis_skin_checked="1"></div>
+											<p>Somos una empresa 100 % Mexicana con más de 40 años en la fabricación y comercialización de pinturas<br>
+y recubrimientos para diversos sectores industriales.</p>
+										</div>
+			</section>
+			<section class="seccion2 seccion2_1">
+				<div class="contenedor" bis_skin_checked="1">
+					<div class="logoAniversario" bis_skin_checked="1"><img src="./index_files/logoAniversario.png" alt="img"></div>
+					<h1>POLÍTICA DE CALIDAD</h1>
+					<p class="colorAzul"><!--Ser una empresa líder a nivel nacional, comprometida y orientada a superar las expectativas de nuestros clientes <br /> con un alto nivel de eficiencia es nuestra filosofía.-->
+						En Pinturas Valmex somos una empresa dedicada a la fabricación, distribución y venta de pinturas y recubrimientos.<br>
+						Seguimos de cerca las necesidades de colaboradores, consejo de administración y socios comerciales, desempeñando nuestros procesos en un entorno de mejora continua para el cumplimiento de los objetivos de calidad y la normativa aplicable vigente.
+						</p>
+
+					<ul class="col4">
+													<li>
+								<img src="./index_files/542725fc5home.png" alt="img">
+							</li>
+							<li>
+								<img src="./index_files/633296abahome.png" alt="img">
+							</li>
+							<li>
+								<img src="./index_files/6273b8e7chome.png" alt="img">
+							</li>
+													<div class="clear" bis_skin_checked="1"></div>
+					</ul>
+
+				</div>
+			</section>
+
+			<section class="seccion2 seccion2_2">
+				<div class="contenedor" bis_skin_checked="1">
+					<h1>- NUESTROS CLIENTES -</h1>
+					<div class="clear20" bis_skin_checked="1"></div>
+					<div class="carruselClientes owl-carousel owl-theme owl-loaded" bis_skin_checked="1">
+													
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+												<div class="owl-stage-outer" bis_skin_checked="1"><div class="owl-stage" style="transform: translate3d(-2706px, 0px, 0px); transition: all 0.25s ease 0s; width: 5166px;" bis_skin_checked="1"><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/6be79d8d4cliente.png" alt="AZIIZYPO"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/ce72d2498cliente.png" alt="TRIKOLOR"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/51e41deb0cliente.png" alt="PINTURAS PEDRIN"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/213048353cliente.png" alt="MADERAS Y HERRAJES GUASAVE"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/bc71cb88ecliente.png" alt="PINTA SUPER "></div></div><div class="owl-item" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/dba4b1625cliente.png" alt="PINTURAS DEL CENTRO"></div></div><div class="owl-item" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/ee38d0611cliente.png" alt="MAYFER"></div></div><div class="owl-item" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/d6d8ae0f7cliente.png" alt="SIGLO XXI"></div></div><div class="owl-item" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/320376896cliente.png" alt="MULTICOLOR"></div></div><div class="owl-item" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/f7fbece79cliente.png" alt="PINTURAS DE LA CUENCA"></div></div><div class="owl-item" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/d1f85132ccliente.png" alt="FERRE HERRAJES RECUMEX"></div></div><div class="owl-item active" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/6be79d8d4cliente.png" alt="AZIIZYPO"></div></div><div class="owl-item active" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/ce72d2498cliente.png" alt="TRIKOLOR"></div></div><div class="owl-item active" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/51e41deb0cliente.png" alt="PINTURAS PEDRIN"></div></div><div class="owl-item active" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/213048353cliente.png" alt="MADERAS Y HERRAJES GUASAVE"></div></div><div class="owl-item active" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/bc71cb88ecliente.png" alt="PINTA SUPER "></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/dba4b1625cliente.png" alt="PINTURAS DEL CENTRO"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/ee38d0611cliente.png" alt="MAYFER"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/d6d8ae0f7cliente.png" alt="SIGLO XXI"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/320376896cliente.png" alt="MULTICOLOR"></div></div><div class="owl-item cloned" style="width: 216px; margin-right: 30px;" bis_skin_checked="1"><div class="item" bis_skin_checked="1"><img src="./index_files/f7fbece79cliente.png" alt="PINTURAS DE LA CUENCA"></div></div></div></div><div class="owl-controls" bis_skin_checked="1"><div class="owl-nav" bis_skin_checked="1"><div class="owl-prev" style="" bis_skin_checked="1"><div class="carruselPanoramaArrow" bis_skin_checked="1"><i class="fa fa-chevron-left"></i></div></div><div class="owl-next" style="" bis_skin_checked="1"><div class="carruselPanoramaArrow carruselPanoramaRightArrow" bis_skin_checked="1"><i class="fa fa-chevron-right"></i></div></div></div><div class="owl-dots" style="" bis_skin_checked="1"><div class="owl-dot" bis_skin_checked="1"><span></span></div><div class="owl-dot active" bis_skin_checked="1"><span></span></div><div class="owl-dot" bis_skin_checked="1"><span></span></div></div></div></div>
+				</div>
+			</section>
+			
+
+					<section class="seccion3">
+				<div class="contenedor" bis_skin_checked="1">
+					<!--<h1>- contacto -</h1>
+					<div class="clear20"></div>
+					<p>Para nosotros es muy importante tu opinión, si tienes alguna pregunta o comentario no <br />dudes en ponerte en contacto con nosotros y con mucho gusto te atenderemos.</p>
+					<div class="clear20"></div>
+					<form method="post" id="formFooter">
+						<ul class="col2">
+							<li>
+								<div class="padding">
+									<input type="text" name="nombre" placeholder="Nombre*" class="inputFooter">
+									<input type="email" name="correo" placeholder="E-mail*" class="inputFooter">
+									<input type="text" name="asunto" placeholder="Asunto*" class="inputFooter">
+								</div>
+							</li>
+							<li>
+								<div class="padding">
+									<textarea name="mensaje" placeholder="comentarios*" class="inputFooter"></textarea>
+									<input type="submit" value="enviar" id="submitContactoFooter" class="submitContactoFooter">
+								</div>
+							</li>
+							<div class="clear"></div>
+						</ul>
+					</form>-->
+					<h1>- contacto -</h1>
+					<div class="clear20" bis_skin_checked="1"></div>
+					<p>Para nosotros es muy importante tu opinión, si tienes alguna pregunta o comentario no <br>dudes en ponerte en contacto con nosotros y con mucho gusto te atenderemos.</p>
+					<div class="clear20" bis_skin_checked="1"></div>
+					<form method="post" id="formContacto">
+						<ul class="col3">
+							<li>
+								<div class="padding" bis_skin_checked="1">
+									<input type="text" name="nombre" placeholder="nombre*" class="inputFooter">
+									<input type="email" name="correo" placeholder="e-mail*" class="inputFooter">
+									<input type="text" name="empresa" placeholder="empresa*" class="inputFooter">
+									<input type="num" name="telefono" placeholder="teléfono*" class="inputFooter">
+									<p>Los campos marcados con * son obligatorios</p>
+								</div>
+							</li>
+							<li>
+								<div class="padding" bis_skin_checked="1">
+									<input type="text" name="ciudad" placeholder="ciudad*" class="inputFooter">
+									<input type="text" name="estado" placeholder="estado*" class="inputFooter">
+									<input type="text" name="asunto" placeholder="asunto*" class="inputFooter">
+									<textarea name="mensaje" placeholder="comentarios*" class="inputFooter"></textarea>
+								</div>
+							</li>
+							<li>
+								<div class="padding" bis_skin_checked="1">
+									<div class="logoBlancoFooter" bis_skin_checked="1"><img src="./index_files/logoBlanco.png" alt="img"></div>
+									<h1>Atencion al cliente</h1>
+									<p>® Pinturas Valmex S.A. de C.V. Industria del vestido No. 2026, Fraccionamiento Industrial Zapopan Norte. Zapopan, Jal. CP. 45130</p>
+									<p>Desde Guadalajara: (33) 3636-6545</p>
+									<p>Del interior del País: (800) 964-3700</p>
+								</div>
+							</li>
+							<div class="clear" bis_skin_checked="1"></div>
+						</ul>
+						<div class="clear20" bis_skin_checked="1"></div>
+						<input type="hidden" name="googleToken" id="googleToken">
+						<input type="submit" value="enviar" class="submitContacto" id="submitContacto">
+					</form>
+				</div>
+			</section>
+			
+		<section class="seccion4">
+			<div class="contenedor" bis_skin_checked="1">
+				<ul class="col3">
+					<li>
+						<div class="padding" bis_skin_checked="1">
+							<strong>® Pinturas Valmex S.A. de C.V.</strong><br>
+							Industria del vestido No. 2026,<br>
+							Fraccionamiento Industrial Zapopan Norte.<br>
+							Zapopan, Jal. CP. 45130
+						</div>
+					</li>
+					<li>
+						<div class="padding" bis_skin_checked="1">
+							<a href="https://www.pinturasvalmex.com/aviso-privacidad">Aviso de privacidad</a>
+						</div>
+					</li>
+					<li>
+						<div class="padding" bis_skin_checked="1">
+							VISITANOS EN:
+							<a href="https://www.youtube.com/user/ValmexTV"><i class="fa fa-youtube"></i></a>
+							<a href="https://www.facebook.com/PinturasValmex/"><i class="fa fa-facebook-square"></i></a>
+						</div>
+					</li>
+					<div class="clear" bis_skin_checked="1"></div>
+				</ul>
+				<div class="clear20" bis_skin_checked="1"></div>
+				<div class="reservado" bis_skin_checked="1">Todos los Derechos Reservados - Pinturas Valmex 2023 -</div>
+				<div class="powerby" bis_skin_checked="1">Desarrollado por: <a href="http://www.womgp.com/?Valmex" target="_blank">WomGP</a></div>
+			</div>
+		</section>
+	</footer>
+		
+	
+<div bis_skin_checked="1"><div class="grecaptcha-badge" data-style="bottomright" bis_skin_checked="1" style="width: 256px; height: 60px; display: block; transition: right 0.3s ease 0s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;"><div class="grecaptcha-logo" bis_skin_checked="1"><iframe title="reCAPTCHA" src="./index_files/anchor.html" width="256" height="60" role="presentation" name="a-ci4qycx8k43u" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" bis_size="{&quot;x&quot;:2473,&quot;y&quot;:1241,&quot;w&quot;:256,&quot;h&quot;:60,&quot;abs_x&quot;:2473,&quot;abs_y&quot;:1241}"></iframe></div><div class="grecaptcha-error" bis_skin_checked="1"></div><textarea id="g-recaptcha-response-100000" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;" src="./index_files/saved_resource(1).html"></iframe></div><iframe id="_hjSafeContext_30440144" title="_hjSafeContext" tabindex="-1" aria-hidden="true" src="./index_files/saved_resource(2).html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe></body></html>

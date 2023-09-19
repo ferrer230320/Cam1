@@ -1,0 +1,1092 @@
+var raiz = 'https://www.pinturasvalmex.com/';
+
+$(window).on('load', function() {
+    $('.status').fadeOut();
+    $('.preloader').delay(350).fadeOut('slow');
+    $('body').delay(350).css({'overflow':'visible'});
+    //$('body').css({'overflow':'visible'});
+
+    //GENERALES
+    setTimeout(function(){
+        $('.textoBanner').addClass('textoBannerAnima');
+        $('.bannerPreventa .itemBanner').each(function setAnim(){
+            $(this).animate({bottom: '20px'},1200)
+            $(this).animate({bottom:'0px'},1200,setAnim);
+        });
+    }, 500);
+
+    /*var ventana_ancho = $(window).width();
+    var ventana_alto = $(window).height();
+    alert(ventana_ancho);
+    alert(ventana_alto);*/
+    
+})
+
+$(window).ready(function(e){
+    var ventana_ancho = $(window).width();
+    var ventana_alto = $(window).height();
+    //google.maps.event.addDomListener(window, 'load', initialize);
+
+    $(function(){
+    $('.bxPromos').bxSlider({
+        auto: true,
+        mode: 'horizontal',
+        captions: true,
+        pager: false,
+        controls: false,
+        speed: 500,
+        moveSlides: 2
+        });
+    });
+
+});
+
+$(window).on('scroll', function() {
+    var scroll = $(this).scrollTop();
+    if(scroll >= 343){
+        //$('.imgProducto').addClass('imgProductoFixed');
+    }else if(scroll < 343){
+        //$('.imgProducto').removeClass('imgProductoFixed');
+    }
+});
+
+$(document).ready(function(e) {
+
+    //FANCYBOX
+    $('.fancy').fancybox({
+        openEffect: 'elastic',
+        closeEffect: 'elastic',
+        padding: 5
+    });
+
+    $(".various").fancybox({
+        openEffect: 'elastic',
+        closeEffect: 'elastic',
+        autoSize: true,
+        padding: 0
+    });
+
+    /*$('html').append('<a class="popupCapacitacion" style="display:none" href="#Capacitacion"></a>');
+    $('.popupCapacitacion').fancybox({
+        openEffect: 'elastic',
+        closeEffect: 'elastic',
+        autoSize: true,
+        padding: 0,
+        afterClose: function () {
+            $('a[href="#Capacitacion"]').remove();
+        }
+    });
+    $('a[href="#Capacitacion"]').trigger('click');*/
+
+    $(document).on('click', '.nombreTema', function(e){
+        var idTema = $(this).attr('data-id');
+
+        $('.nombreTema').removeClass('nombreTemaActivo');
+        $(this).addClass('nombreTemaActivo');
+
+        if(idTema == 'cursos'){
+            $('#conteCursos').load("https://www.pinturasvalmex.com/capacitaciones-cursos.php?"+(new Date()).getTime());
+        }else if(idTema == 'cerrar-sesion'){
+            alertify.confirm("¿Realmente deseas Salir?", function (e) {
+                if (e) {
+                    //alertify.success("Saliendo del Sistema!!");
+                    $.ajax({
+                        type: "POST",
+                        url: "https://www.pinturasvalmex.com/php/cerrar-sesion.php",
+                        success: function(data) {
+                            alertify.success("Adios!!!");
+                            setTimeout(function(e){
+                                location.reload();
+                            },1500)
+                        }
+                    });
+                } else {
+                    alertify.error("Cancelado!!!");
+                }
+            });
+            return false;
+        }else{
+            $.ajax({
+                type: "GET",
+                url: "https://www.pinturasvalmex.com/php/valida_tema_capacitacion.php?idTema="+idTema+"&"+(new Date()).getTime(),
+                success: function(data){
+                    console.log(data);
+                    $('#ajaxTemas').stop(true).hide().html(data).fadeIn();
+                },
+                cache: false
+            })
+        }
+    })
+
+    /*
+    $(document).on('click', '#submitFlotante', function(e){
+        $("#formFlotante").validate({
+            rules: {
+                nombre: { required: true, minlength: 3 },
+                apellido: { required: true, minlength: 3 },
+                telefono: { required: true, minlength: 10 },
+                correo: { required: true, minlength: 10 },
+                correo: { required: true, minlength: 10 },
+                correo: { required: true, minlength: 10 },
+            },
+            submitHandler: function(form){
+                $('#submitFlotante').attr('disabled','disabled');
+                setTimeout(function(e){
+                    $.ajax({
+                        type: "POST",
+                        url:"https://www.pinturasvalmex.com/php/valida_flotante.php",
+                        data: $("#formFlotante").serialize(),
+                        success: function(data){
+                            console.log(data);
+
+                            if(data == 'alta_registro'){
+                                alert('Te has suscrito al curso!!');
+                                location.reload();
+                            }else{
+                                alert('Error de envio!!');
+                            }
+                        }
+                    });
+                },1300)
+            }
+        })
+    });
+    */
+
+    $(document).on('click', '#submitRegistroCapacitaciones', function(e){
+        $("#formRegistroCapacitaciones").validate({
+            rules: {
+                nombre: { required: true, minlength: 3 },
+                apellido: { required: true, minlength: 3 },
+                telefono: { required: true, number: true, maxlength: 10, minlength: 10 },
+                estado: { required: true, minlength: 3 },
+                empresa: { required: true, minlength: 3 },
+                puesto: { required: true, minlength: 3 },
+                correo: { required: true, email: true, minlength: 10 },
+            },
+            submitHandler: function(form){
+                $('#submitRegistroCapacitaciones').attr('disabled','disabled');
+                setTimeout(function(e){
+                    $.ajax({
+                        type: "POST",
+                        url:"https://www.pinturasvalmex.com/php/valida_flotante.php",
+                        data: $("#formRegistroCapacitaciones").serialize(),
+                        success: function(data){
+                            console.log(data);
+
+                            if(data == 'alta_registro'){
+                                alert('Te has suscrito al curso!!');
+                                location.reload();
+                            }else if(data == 'existe_registro'){
+                                alert('La cuenta de correo ya está registrada!!');
+                            }else{
+                                alert('Error de envio!!');
+                            }
+
+                            $('#submitRegistroCapacitaciones').removeAttr('disabled','disabled');
+                        }
+                    });
+                },1300)
+            }
+        })
+    });
+
+    $(document).on('click', '#submitCurso', function(e){
+        $("#formCurso").validate({
+            rules: {
+                correo_registro: { required: true, email: true, minlength: 10 }
+            },
+            submitHandler: function(form){
+                $('#submitCurso').attr('disabled','disabled');
+                setTimeout(function(e){
+                    $.ajax({
+                        type: "POST",
+                        url:"https://www.pinturasvalmex.com/php/valida_capacitaciones.php",
+                        data: $("#formCurso").serialize(),
+                        success: function(data){
+                            console.log(data);
+
+                            if(data == 'listo_inscrito'){
+                                alert('Te has suscrito al curso!!');
+                                location.reload();
+                            }else if(data == 'no_inscrito'){
+                                alert('El correo no se encuentra registrado');
+                                 $('#submitCurso').removeAttr('disabled', 'disabled');
+                            }else if(data == 'ya_inscrito'){
+                                location.reload();
+                            }
+                        }
+                    });
+                },1300)
+            }
+        })
+    });
+
+    //ESTE ES EL BOTON Q MUESTRA EL FORMULARIO
+    $(document).on('click', '.yaRegistrado', function(e){
+        $('.yaRegistrado').hide();
+        //aqui seria 
+        //$('#formFlotante').hide().stop(true).html('sss').fadeIn();
+        $('#formRegistroCapacitaciones').hide();
+        $('#formCurso').fadeIn(1000);
+
+        // $('#formRegistroCapacitaciones').load("https://www.pinturasvalmex.com/php/muestra-formulario-capacitaciones.php?"+(new Date()).getTime());
+    });
+
+    $(document).on('click', '.hoverIframe', function(e){
+        $(this).fadeOut();
+        $("iframe")[0].src += "&autoplay=1";
+
+        var idVideo = $(this).attr('id');
+
+        $.ajax({
+            type: "GET",
+            url: "https://www.pinturasvalmex.com/php/valida_video_vista.php?idVideo="+idVideo,
+            success: function(data){
+                console.log(data);
+            },
+            cache: false
+        })
+    })
+
+    //MENU HEADER 
+    var cambio = false;
+    $('.menu li a').each(function(index) {
+        if(this.href.trim() == window.location){
+            $(this).addClass("menu_activo");
+            cambio = true;
+        }
+    });
+    /*
+    if(!cambio){
+        $('.menu li a:first').addClass("menu_activo");
+    }
+    */
+
+    //BANNER HOME
+    $('.tp-banner').revolution({
+        dottedOverlay:"none",
+        delay:16000,
+        startwidth:1170,
+        startheight:400,
+        hideThumbs:200,
+
+        thumbWidth:100,
+        thumbHeight:50,
+        thumbAmount:5,
+
+        navigationType:"bullet",
+        navigationArrows:"solo",
+        navigationStyle:"preview5",
+
+        touchenabled:"on",
+        onHoverStop:"on",
+
+        swipe_velocity: 0.7,
+        swipe_min_touches: 1,
+        swipe_max_touches: 1,
+        drag_block_vertical: false,
+
+        parallax:"mouse",
+        parallaxBgFreeze:"on",
+        parallaxLevels:[7,4,3,2,5,4,3,2,1,0],
+
+        keyboardNavigation:"off",
+
+        navigationHAlign:"center",
+        navigationVAlign:"bottom",
+        navigationHOffset:0,
+        navigationVOffset:20,
+
+        soloArrowLeftHalign:"left",
+        soloArrowLeftValign:"center",
+        soloArrowLeftHOffset:20,
+        soloArrowLeftVOffset:0,
+
+        soloArrowRightHalign:"right",
+        soloArrowRightValign:"center",
+        soloArrowRightHOffset:20,
+        soloArrowRightVOffset:0,
+
+        shadow:0,
+        fullWidth:"on",
+        fullScreen:"off",
+
+        spinner:"spinner4",
+
+        stopLoop:"off",
+        stopAfterLoops:-1,
+        stopAtSlide:-1,
+
+        shuffle:"off",
+
+        autoHeight:"off",                       
+        forceFullWidth:"off",                                       
+
+        hideThumbsOnMobile:"off",
+        hideNavDelayOnMobile:1500,                      
+        hideBulletsOnMobile:"off",
+        hideArrowsOnMobile:"off",
+        hideThumbsUnderResolution:0,
+
+        hideSliderAtLimit:0,
+        hideCaptionAtLimit:0,
+        hideAllCaptionAtLilmit:0,
+        startWithSlide:0,
+        videoJsPath:"rs-plugin/videojs/",
+        fullScreenOffsetContainer: ""   
+    });
+
+    //CARRUSEL CATEGORIAS
+    /*$('.carruselCategoria').owlCarousel({
+        loop:true,
+        margin:20,
+        autoplay: false,
+        autoplayTimeout: 3000,
+        nav:true,
+        navText: ["<div class='carruselCategoriaArrow'><i class='fa fa-chevron-left'></i></div>","<div class='carruselCategoriaArrow carruselCategoriaRightArrow'><i class='fa fa-chevron-right'></i></div>"],
+        autoplayHoverPause: true,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:2,
+            },
+            1000:{
+                items:4,
+            }
+        }
+    });*/
+
+    //CARRUSEL BLOG
+    $('.carruselBlog').owlCarousel({
+        loop:true,
+        margin:30,
+        autoplay: false,
+        autoplayTimeout: 3000,
+        nav:true,
+        navText: ["<div class='carruselPanoramaArrow'><i class='fa fa-chevron-left'></i></div>","<div class='carruselPanoramaArrow carruselPanoramaRightArrow'><i class='fa fa-chevron-right'></i></div>"],
+        autoplayHoverPause: true,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:2,
+            },
+            1000:{
+                items:3,
+            }
+        }
+    });
+
+    $(document).on('click','.btnRegistro', function(e){
+        e.preventDefault();
+        var idCurso = $(this).attr('id');
+        var nombreCurso = $(this).attr('data-title');
+        $.ajax({
+            type: "POST",
+            url: "https://www.pinturasvalmex.com/php/valida_capacitaciones.php",
+            data: "idCurso="+idCurso,
+            success: function(data){
+                console.log(data);
+                if(data == 'no_session'){
+                    window.location = "https://www.pinturasvalmex.com/capacitaciones-registro/"+idCurso;
+                }else if(data == 'ya_inscrito'){
+                    alert('ya estas registrado al curso '+nombreCurso);
+                }else if(data == 'listo_inscrito'){
+                    alert('gracias por registrarte al curso '+nombreCurso);
+                }
+            },
+            cache: false
+        })
+    })
+
+    // $(document).on('click','.btnRegistro', function(e){
+    //     e.preventDefault();
+    //     $.ajax({
+    //         type: "GET",
+    //         cache: false,
+    //         url: this.href,
+    //         success: function (data) {
+    //             $.fancybox(data, {
+    //                 itToView: false,
+    //                 width: 500,
+    //                 height: 400,
+    //                 autoSize: true,
+    //                 closeClick: false,
+    //                 openEffect: 'fade',
+    //                 closeEffect: 'fade',
+    //                 padding: 0
+    //             });
+    //         }
+    //     });
+    // })
+
+    //CARRUSEL CLIENTES
+    //var isMulti = ($('.testi .item').length > 1) ? true : false;
+    $('.carruselClientes').owlCarousel({
+        loop: true,
+        margin:30,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        nav:true,
+        navText: ["<div class='carruselPanoramaArrow'><i class='fa fa-chevron-left'></i></div>","<div class='carruselPanoramaArrow carruselPanoramaRightArrow'><i class='fa fa-chevron-right'></i></div>"],
+        autoplayHoverPause: true,
+        responsive:{
+            0:{
+                items:3,
+            },
+            600:{
+                items:3,
+            },
+            1000:{
+                items:5,
+            }
+        }
+    });
+
+    $('.carruselRelacion').owlCarousel({
+        loop:true,
+        margin:30,
+        autoplay: false,
+        autoplayTimeout: 3000,
+        nav:true,
+        navText: ["<div class='carruselPanoramaArrow'><i class='fa fa-chevron-left'></i></div>","<div class='carruselPanoramaArrow carruselPanoramaRightArrow'><i class='fa fa-chevron-right'></i></div>"],
+        autoplayHoverPause: true,
+        responsive:{
+            0:{
+                items:3,
+            },
+            600:{
+                items:3,
+            },
+            1000:{
+                items:3,
+            }
+        }
+    });
+
+    //MAPA DISTRIBUIDOR ESTADO
+    $('#selectEstado').on('change', function() {
+        var value = $(this).find(":checked").val();
+        var valueEstado = $(this).find(":checked").text();
+
+        $('.conteMapita h1').html(valueEstado);
+
+        $.ajax({
+            type: "POST",
+            url: "php/valida_mapita.php?idEstado="+value,
+            dataType:'json',
+            success: function(json){
+                var map;
+                if(json[0]['idEstado']!=0){
+                    var mapProp = {
+                        center: new google.maps.LatLng(json[0]['lat'],json[0]['lng']),
+                        zoom: 7,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"administrative.neighborhood","elementType":"geometry.fill","stylers":[{"visibility":"off"},{"hue":"#17ff00"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ff0000"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#0088cc"},{"visibility":"on"}]}]
+                    }
+                }else{
+                    var mapProp = {
+                        center: new google.maps.LatLng(json[0]['lat'],json[0]['lng']),
+                        zoom: 5,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"administrative.neighborhood","elementType":"geometry.fill","stylers":[{"visibility":"off"},{"hue":"#17ff00"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ff0000"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#0088cc"},{"visibility":"on"}]}]
+                    }
+                }
+                
+                map2 = new google.maps.Map(document.getElementById("mapita"), mapProp);
+
+                $.each(json, function (key, data) {
+                    var latLng = new google.maps.LatLng(data.lat, data.lng);
+
+                    var icon = {
+                        url: 'img/general/marker.png',
+                    };
+                    var marker = new google.maps.Marker({
+                        position:   latLng,
+                        map:        map2,
+                        icon:       icon,
+                        title:      data.titulo,
+                        idD:        data.id,
+                        animation: google.maps.Animation.DROP
+                    });
+
+                    var details = '<div class="infoMapa">'+data.titulo+'</div>';
+                    bindInfoWindow(marker, map, infowindow, details);
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                        var ancla = data.id;
+                        $('.conteDistribuidor').removeClass('anclaActiva');
+                        $('#distribuidor2'+ancla).addClass('anclaActiva');
+                        $("html, body").animate({
+                            scrollTop: $('#distribuidor2'+ancla).offset().top-130
+                        },1000);
+                        return false;
+                    });
+                })
+
+                function bindInfoWindow(marker, map, infowindow, strDescription){
+                    google.maps.event.addListener(marker, 'mouseover', function() {
+                        infowindow.setContent(strDescription);
+                        infowindow.open(map, marker);
+                    });
+                    google.maps.event.addListener(marker, 'mouseout', function(){
+                        infowindow.close();
+                    });                    
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "php/valida_mapita2.php?idEstado="+value,
+                    success: function(data2){
+                        $('.conteDistribuidorOculto').fadeOut();
+                        $('.conteDistribuidor2').html(data2);
+                        //console.log(data2);
+                    }
+                })
+
+            }
+        });
+    })
+
+    //SELECT FAQS
+    $('#selectFaCategoria').on('change', function(){
+        var value = $(this).find(":checked").val();
+        var valueCategoria = $(this).find(":checked").text();
+        $('.categoriaFaq span').html(valueCategoria);
+        $.ajax({
+            type: "POST",
+            url: "php/valida_faqs.php?idCategoria="+value,
+            success: function(data){
+                $('.conteFaqsOculto').html(data);
+                var item = 0;
+                $('.conteFaqsItem').on('click', function(){
+                    $('.conteFaqsItem').find('.descFaq').slideUp();
+                    $('.conteFaqsItem').find('.tituloFaq').removeClass('categoriaActivaF');
+                    $('.conteFaqsItem').find('.tituloFaq span').removeClass('categoriaActivaFSpan');
+
+                    $(this).find('.tituloFaq').addClass('categoriaActivaF');
+                    $(this).find('.tituloFaq span').addClass('categoriaActivaFSpan');
+                    $(this).find('.descFaq').slideDown();
+                })
+            }
+        })
+    });
+
+    //VALIDA COMENTARIOS
+    $("#submitPublicar").click(function(event) {
+        if($('#formComenst').valid()){
+            $('#submitPublicar').addClass('btnActivo');
+            setTimeout(function(e){
+                $.ajax({
+                    method: "POST",
+                    url: "php/actualiza_comentario.php",
+                    data:$('#formComenst').serialize()
+                }).done(function(msg) {
+                    //console.log(msg);
+                    $("#comentariosajax").html(msg);
+                    $('#submitPublicar').removeClass('btnActivo');
+                    $("#formComenst")[0].reset();
+                });
+            }, 1300);
+        }else{//CUANDO NO ESTA VALIDADO
+
+        }
+    });
+
+    //MAPA CONTACTO
+    var origin = new google.maps.LatLng(20.742022, -103.388276);
+    function initialize2() {
+        var mapOptions = {
+            zoom: 14,
+            center: origin,
+            position: '20.742704, -103.388276',
+            styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"administrative.neighborhood","elementType":"geometry.fill","stylers":[{"visibility":"off"},{"hue":"#17ff00"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.fill","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ff0000"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#0088cc"},{"visibility":"on"}]}]
+        };
+        var icon = {
+            url: 'img/general/marker.png',
+        };
+        map = new google.maps.Map(document.getElementById('mapitaContacto'), mapOptions);
+        var marker = new google.maps.Marker({
+            position: origin,
+            map: map,
+            icon: icon,
+            animation: google.maps.Animation.DROP
+        });
+        
+
+        //infowindow = new google.maps.InfoWindow();
+        
+        //locate(0);
+    }
+    google.maps.event.addDomListener(window, 'load', initialize2);
+
+    //FUNCIONES SIMULADOR
+    $('img.svg').each(function(){
+        var $img = jQuery(this);
+        var imgID = $img.attr('id');
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+    
+        jQuery.get(imgURL, function(data) {
+            // Get the SVG tag, ignore the rest
+            var $svg = jQuery(data).find('svg');
+    
+            // Add replaced image's ID to the new SVG
+            if(typeof imgID !== 'undefined') {
+                $svg = $svg.attr('id', imgID);
+            }
+            // Add replaced image's classes to the new SVG
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass+' replaced-svg');
+            }
+    
+            // Remove any invalid XML tags as per http://validator.w3.org
+            $svg = $svg.removeAttr('xmlns:a');
+            
+            // Check if the viewport is set, else we gonna set it if we can.
+            if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+                $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+            }
+    
+            // Replace image with new SVG
+            $img.replaceWith($svg);
+    
+        }, 'xml');
+    
+    });
+
+    //ACTIVAR COLORES SIMULADOR
+    $('.itemSimulador1').on('click', function(e){
+        var separaCadena = $(this).attr('class').split(" ");//SEGUNDA CLASSE DEL DIV
+        $('.itemSimulador1').removeClass('itemActivo');
+        $(this).addClass('itemActivo');
+    })
+    $('.itemSimulador2').on('click', function(e){
+        var separaCadena = $(this).attr('class').split(" ");//SEGUNDA CLASSE DEL DIV
+        $('.itemSimulador2').removeClass('itemActivo');
+        $(this).addClass('itemActivo');
+    })
+    $('.itemSimulador3').on('click', function(e){
+        var separaCadena = $(this).attr('class').split(" ");//SEGUNDA CLASSE DEL DIV
+        $('.itemSimulador3').removeClass('itemActivo');
+        $(this).addClass('itemActivo');
+    })
+    $('.itemSimulador-car').on('click', function(e){
+        $('.itemSimulador-car').removeClass('itemActivo');
+        $(this).addClass('itemActivo');
+    })
+    //BORRA COLORES SIMULADOR 
+    $('.btnReset').on('click', function(e){
+        $('.muro2, .muro3, .tuCombinacion, .combinacionesConte').fadeOut();
+        $('.itemSimulador').removeClass('itemActivo');
+        $('path').css({
+            fill: '#FFF',
+            transition: '1s',
+            opacity: 0.9
+        })
+    })
+
+    $('.selectMenu').change(function(){
+        var ob = $(this).val();
+        window.location.href = ob;
+    });
+
+    //BOTON BLOG MOVIL
+    var botonBlog = 0;
+    $('.botonBlog').on('click', function(e){
+        
+        if(botonBlog == 0){
+            $('.colBlog2').css({
+                'right' : '0'
+            })
+            $('.bgHoverBlog').fadeIn();
+            botonBlog = 1;
+            $('.btnCerrarBlog').on('click', function(e){
+                $('.colBlog2').css({
+                    'right' : '-300px'
+                })
+                $('.bgHoverBlog').fadeOut();
+                botonBlog = 0;
+            });
+        }
+    });
+    $('.bgHoverBlog').on('click', function(e){
+        $(this).fadeOut();
+        $('.colBlog2').css({
+            'right' : '-300px'
+        })
+        botonBlog = 0;
+    });
+
+    $('.btnSearch').on('click', function(e){
+        e.preventDefault();
+        $('body').css({ position: 'fixed', width: '100%' })
+        $('.bgBuscador').fadeIn();
+        $(".inputSearch").focus();
+        $('.inputSearch').val('');
+    })
+    $('.cerrarBuscador i').on('click', function(e){
+        $('body').css({ position: 'relative'})
+        $('.bgBuscador').fadeOut();
+    })
+    //CIERRA EL BUSCADOR
+    $(document).keyup(function(event){
+        if(event.which==27){//TECLA ESC
+            $('body').css({ position: 'relative'})
+            $('.bgBuscador').fadeOut();
+        }
+    });
+
+    $('.imgSuperficie').on('click', function(e){
+        /*var ob = $(this).attr('id');
+
+        if(ob == 'superficie_rugosa'){
+            $('#superficie_lisa').removeClass('imgSuperficieActivo');
+            $('#superficie_lisa').find('img').attr('src', 'img/general/lisa-gris.png');
+            $(this).addClass('imgSuperficieActivo');
+            $(this).find('img').attr('src', 'img/general/rugosa.png');
+        }else if(ob == 'superficie_lisa'){
+            $('#superficie_rugosa').removeClass('imgSuperficieActivo');
+            $('#superficie_rugosa').find('img').attr('src', 'img/general/rugosa-gris.png');
+            $(this).addClass('imgSuperficieActivo');
+            $(this).find('img').attr('src', 'img/general/lisa.png');
+        }
+
+        if(ob == 'aplicacion_pistola'){
+            $('#aplicacion_brocha').removeClass('imgSuperficieActivo');
+            $('#aplicacion_brocha').find('img').attr('src', 'img/general/brocha-gris.png');
+            $('#aplicacion_rodillo').removeClass('imgSuperficieActivo');
+            $('#aplicacion_rodillo').find('img').attr('src', 'img/general/rodillo-gris.png');
+            $(this).addClass('imgSuperficieActivo');
+            $(this).find('img').attr('src', 'img/general/pistola.png');
+        }else if(ob == 'aplicacion_brocha'){
+            $('#aplicacion_pistola').removeClass('imgSuperficieActivo');
+            $('#aplicacion_pistola').find('img').attr('src', 'img/general/pistola-gris.png');
+            $('#aplicacion_rodillo').removeClass('imgSuperficieActivo');
+            $('#aplicacion_rodillo').find('img').attr('src', 'img/general/rodillo-gris.png');
+            $(this).addClass('imgSuperficieActivo');
+            $(this).find('img').attr('src', 'img/general/brocha-calculadora.png');
+        }
+        else if(ob == 'aplicacion_rodillo'){
+            $('#aplicacion_pistola').removeClass('imgSuperficieActivo');
+            $('#aplicacion_pistola').find('img').attr('src', 'img/general/pistola-gris.png');
+            $('#aplicacion_brocha').removeClass('imgSuperficieActivo');
+            $('#aplicacion_brocha').find('img').attr('src', 'img/general/brocha-gris.png');
+
+            $(this).addClass('imgSuperficieActivo');
+            $(this).find('img').attr('src', 'img/general/rodillo.png');
+        }*/
+    })
+
+    /*$('#metros_cuadrados').on('keyup', function(e){
+        metros = $(this).val();
+        if(metros == '0' || metros == ''){
+            $('.litrosNecesarios').html('0.00');
+        }else{
+            var valor = $('.idProductoCalcular').val();
+            litrosN = metros*valor;
+            $('.litrosNecesarios').html(litrosN).number(true,3);
+            $('.numeroManos').val(litrosN).number(true,3);
+        }
+    });
+
+    $('#numero_manos').on('keyup', function(e){
+        manos = $(this).val();
+        litrosN2 = $('.numeroManos').val();
+        nLitros = manos*litrosN2;
+        $('.litrosNecesarios').html(nLitros).number(true,3);
+    });*/
+
+    //VALIDA FORMULARIO FOOTER
+    $('#submitContactoFooter').click(function(e){
+        $("#formFooter").validate({
+            rules: {
+                nombre: { required: true, minlength: 3 },
+                correo: { required: true, minlength: 3 },
+                asunto: { required: true },
+                mensaje: { required: true, minlength: 3 }
+            },
+            submitHandler: function(form){
+                $('#submitContactoFooter').attr('disabled','disabled');
+                setTimeout(function(e){
+                    $.ajax({
+                        type: "POST",
+                        url:"php/valida_contacto.php",
+                        data: $("#formFooter").serialize(),
+                        success: function(data){
+                            if(data == 'mensaje_enviado'){
+                                alert('Mensaje enviado Correctamente!!');
+                                $("#formFooter")[0].reset();
+                            }else{
+                                alert('Error de envio!!');
+                            }
+
+                            $('#submitContactoFooter').removeAttr('disabled');
+                        }
+                    });
+                },1300)
+            }
+        })
+    });
+
+
+    // ASIGNAR TOKEN AL CARGAR LA PÁGINA
+    // grecaptcha.ready(function() {
+    //     grecaptcha.execute('6Leox8MeAAAAACFUp0FT1BljtZ8tKkgn9xxF62Qw', {action: 'homepage'})
+    //     .then(function(token) {
+    //         $('#googleToken').val(token);
+    //     });
+    // });
+
+    function captcha_execute() {
+        grecaptcha.execute('6Leox8MeAAAAACFUp0FT1BljtZ8tKkgn9xxF62Qw', {action: 'homepage'}).then(function(token) {
+            $('#googleToken').val(token);
+        });
+    }
+
+    //VALIDA FORMULARIO CONTACTO
+    $('#submitContacto').click(function(e){
+        grecaptcha.ready(function() {
+            captcha_execute();
+        });
+        $("#formContacto").validate({
+            rules: {
+                nombre: { required: true, minlength: 3 },
+                correo: { required: true, minlength: 3 },
+                empresa: { required: true, minlength: 3 },
+                telefono: { required: true, minlength: 3 },
+                ciudad: { required: true, minlength: 3 },
+                estado: { required: true, minlength: 3 },
+                telefono: { required: true, minlength: 3 },
+                asunto: { required: true, minlength: 3 },
+                mensaje: { required: true, minlength: 3 }
+            },
+            submitHandler: function(form){
+                $('#submitContacto').attr('disabled','disabled');
+                setTimeout(function(e){
+                    $.ajax({
+                        type: "POST",
+                        url: raiz+"php/valida_contacto_footer.php",
+                        data: $("#formContacto").serialize(),
+                        success: function(data){
+                            // console.log($('#googleToken').val());
+                            // console.log(data);
+                            if(data == 'mensaje_enviado'){
+                                alert('Mensaje enviado Correctamente!!');
+                                $("#formContacto")[0].reset();
+                            }else{
+                                alert('Error de envio!!');
+                            }
+                            $('#submitContacto').removeAttr('disabled');
+                        }
+                    });
+                },1300)
+            }
+        });
+    });
+
+    //CALCULADORA APLICACIONES
+    /*var valueAplica = 0;
+    var valueMetros = 0;
+    $('.aplicaciones').on('click', function(e){
+    	var ob = $('.litrosNecesarios').html();
+    	if(ob == '0.0'){
+    		alert('seleccione la superficie');
+    		valueAplica = 0;
+    	}else{
+    		valueAplica = 1;
+    	}
+	})
+	$('#metros_cuadrados').on('keyup', function(e){
+		if(valueAplica == 0){
+			alert('seleccione una superficie y aplicacion');
+			$(this).val('1');
+			valueMetros = 0;
+		}else{
+			valueMetros = 1;
+		}
+    });
+    $('#numero_manos').on('keyup', function(e){
+		if(valueAplica == 0){
+			alert('seleccione una superficie y aplicacion');
+			$(this).val('1');
+			valueMetros = 0;
+		}else{
+			valueMetros = 1;
+		}
+    });*/
+
+    //VALIDA FORMULARIO CONTACTO
+    var activaCalcu = 0;
+    $('.imgSuperficie').on('click', function(e){
+        var idSuperficie = $(this).attr('id');    
+
+        if(idSuperficie == 'superficie_lisa'){
+            $(this).addClass('imgSuperficieActivo').find('img').attr('src', 'img/general/lisa.png');
+            $('#superficie_rugosa').removeClass('imgSuperficieActivo').find('img').attr('src', 'img/general/rugosa-gris.png');
+            $('.tipo_superficie').val(idSuperficie);
+            activaCalcu = 1;
+        }else if(idSuperficie == 'superficie_rugosa'){
+            $('#superficie_rugosa').addClass('imgSuperficieActivo').find('img').attr('src', 'img/general/rugosa.png');
+            $('#superficie_lisa').removeClass('imgSuperficieActivo').find('img').attr('src', 'img/general/lisa-gris.png');
+            $('.tipo_superficie').val(idSuperficie);
+            activaCalcu = 1;
+        }
+
+        //CHANGEL VALUES INPUT
+        
+
+        if(activaCalcu == 1){
+            $('.aplicaciones').on('click', function(e){
+                var idAplicacion = $(this).attr('id');
+
+                if(idAplicacion == 'aplicacion_pistola'){
+                    
+                    $('#aplicacion_brocha').removeClass('imgSuperficieActivo');
+                    $('#aplicacion_brocha').find('img').attr('src', 'img/general/brocha-gris.png');
+
+                    $('#aplicacion_rodillo').removeClass('imgSuperficieActivo');
+                    $('#aplicacion_rodillo').find('img').attr('src', 'img/general/rodillo-gris.png');
+
+                    $(this).addClass('imgSuperficieActivo');
+                    $(this).find('img').attr('src', 'img/general/pistola.png');
+
+                    $('#metros_cuadrados').prop("disabled", false);
+
+                    $('#metros_cuadrados').prop("disabled", false);
+                    $('#numero_manos').prop("disabled", false);
+                    $('.tipo_aplicacion').val(idAplicacion);
+                    $
+
+                }else if(idAplicacion == 'aplicacion_brocha'){
+                    $('#aplicacion_pistola').removeClass('imgSuperficieActivo');
+                    $('#aplicacion_pistola').find('img').attr('src', 'img/general/pistola-gris.png');
+
+                    $('#aplicacion_rodillo').removeClass('imgSuperficieActivo');
+                    $('#aplicacion_rodillo').find('img').attr('src', 'img/general/rodillo-gris.png');
+
+                    $(this).addClass('imgSuperficieActivo');
+                    $(this).find('img').attr('src', 'img/general/brocha-calculadora.png');
+
+                    $('#metros_cuadrados').prop("disabled", false);
+                    $('#numero_manos').prop("disabled", false);
+                    $('.tipo_aplicacion').val(idAplicacion);
+
+                }else if(idAplicacion == 'aplicacion_rodillo'){
+                    $('#aplicacion_pistola').removeClass('imgSuperficieActivo');
+                    $('#aplicacion_pistola').find('img').attr('src', 'img/general/pistola-gris.png');
+
+                    $('#aplicacion_brocha').removeClass('imgSuperficieActivo');
+                    $('#aplicacion_brocha').find('img').attr('src', 'img/general/brocha-gris.png');
+
+                    $(this).addClass('imgSuperficieActivo');
+                    $(this).find('img').attr('src', 'img/general/rodillo.png');
+
+                    $('#metros_cuadrados').prop("disabled", false);
+
+                    $('#metros_cuadrados').prop("disabled", false);
+                    $('#numero_manos').prop("disabled", false);
+                    $('.tipo_aplicacion').val(idAplicacion);
+                }
+                
+                $('#submitCalcular').prop("disabled", false);
+            })
+
+        }
+        
+    })
+    
+    
+    $('#submitCalcular').click(function(e){
+        $("#formCalculadora").validate({
+            rules: {
+                mensaje: { required: true, minlength: 3 }
+
+            },
+            submitHandler: function(form){
+                //$('#submitCalcular').attr('disabled','disabled');
+                setTimeout(function(e){
+                    $.ajax({
+                        type: "POST",
+                        url:"php/valida_calculadora.php?secContact",
+                        data: $("#formCalculadora").serialize(),
+                        success: function(data){
+                            console.log(data);
+                            $('.litrosNecesarios').html(data);
+                            //$('#submitCalcular').removeAttr('disabled');
+                        }
+                    });
+                },1300)
+            }
+        })
+    });
+
+
+
+});
+
+
+
+
+//OBTENER COLOR SIMULADOR
+var combinacion = '';
+function obtener_color(color, cual, mask, id, idColor){
+    if(cual == 'fachada' || cual == 'madera'){
+        if(mask == 'mask-1'){
+            combinacion = 'combinacion1';
+            $('.mask-1 path').css({ 
+                fill: "#"+color,
+                transition: '1s',
+                opacity: 0.9
+            });
+            $('.muro2').fadeIn();
+            $('.opcion2').fadeIn();
+        }else if(mask == 'mask-2'){
+            combinacion = 'combinacion2';
+            $('.mask-2 path').css({ 
+                fill: "#"+color,
+                transition: '1s',
+                opacity: 0.9
+            });
+            $('.muro3').fadeIn();
+            $('.opcion3').fadeIn();
+        }else if(mask == 'mask-3'){
+            combinacion = 'combinacion3';
+            $('.mask-3 path').css({ 
+                fill: "#"+color,
+                transition: '1s',
+                opacity: 0.9
+            });
+        }
+    }
+
+    if(cual == 'auto'){
+        combinacion = 'combinacion1';
+        $('.mask-1 path').css({ 
+            fill: "#"+color,
+            transition: '1s',
+            opacity: 0.9
+        });
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "php/valida_simulador.php",
+        data: "idColor="+idColor+"&combinacion="+combinacion,
+        success: function(data){
+            //console.log(data);
+            $('.tuCombinacion').slideDown();
+            if(combinacion == 'combinacion1'){
+                $('.combinacion1').fadeIn().html(data);
+            }else if(combinacion == 'combinacion2'){
+                $('.combinacion2').fadeIn().html(data);
+            }else if(combinacion == 'combinacion3'){
+                $('.combinacion3').fadeIn().html(data);
+            }            
+        }
+    });
+}
